@@ -1,0 +1,1 @@
+This directory is for all the scripts and functions the are important in running the website.
