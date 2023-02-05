@@ -1,0 +1,139 @@
+{% load static %}
+
+<nav class="vertnav navbar navbar-light">
+    <!-- nav bar -->
+
+    <p class="text-muted nav-heading mt-4 pt-2 mb-1">
+        <span>Client Data Panel</span>
+    </p>
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item dropdown">
+            <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-trending-up fe-16"></i>
+                <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+            </a>
+            <ul class="collapse list-unstyled pl-4 w-100" id="dashboard">
+                <li class="nav-item">
+                    <a class="nav-link pl-3" href="./dashboard-analytics.html"><span class="ml-1 item-text">Status
+                            Dashboard</span></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Client Data Mgmt.</span>
+    </p>
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+
+        <li class="nav-item dropdown">
+            <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-users fe-16"></i>
+                <span class="ml-3 item-text">Users</span>
+            </a>
+            <ul class="collapse list-unstyled pl-4 w-100" id="forms">
+                <li class="nav-item">
+                
+                    <a class="nav-link pl-3" href="./form_elements.html"><span class="ml-1 item-text"><i class="fe fe-user fe-16"></i> View Users
+                        </span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pl-3" href="./form_elements.html"><span class="ml-1 item-text"><i class="fe fe-user-plus fe-16"></i> Add User
+                        </span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pl-3" href="./form_elements.html"><span class="ml-1 item-text"><i class="fe fe-user-check fe-16"></i> Modify User
+                        </span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pl-3" href="./form_elements.html"><span class="ml-1 item-text"><i class="fe fe-user-x fe-16"></i> Delete Users
+                        </span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+            <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-send fe-16"></i>
+                <span class="ml-3 item-text">API Management</span>
+            </a>
+            <ul class="collapse list-unstyled pl-4 w-100" id="tables">
+                <li class="nav-item">
+                    <a class="nav-link pl-3" href="./table_basic.html"><span class="ml-1 item-text"><i class="fe fe-key fe-16"></i> API Key
+                        </span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link pl-3" href="./table_advanced.html"><span class="ml-1 item-text"><i class="fe fe-x-square fe-16"></i> Deactivate
+                            Keys</span></a>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+            <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-server fe-16"></i>
+                <span class="ml-3 item-text">Quotas</span>
+            </a>
+            <ul class="collapse list-unstyled pl-4 w-100" id="charts">
+                <li class="nav-item">
+                    <a class="nav-link pl-3" href="./chart-inline.html"><span class="ml-1 item-text">Quota Info
+                        </span></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+
+    <p class="text-muted nav-heading mt-4 mb-1">
+        <span>My Payments</span>
+    </p>
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item dropdown">
+            <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+                <i class="fe fe-zap fe-16"></i>
+                <span class="ml-3 item-text">Recharges</span>
+            </a>
+            <ul class="collapse list-unstyled pl-4 w-100" id="contact">
+                <a class="nav-link pl-3" href="./contacts-list.html"><span class="ml-1">New Recharge</span></a>
+                <a class="nav-link pl-3" href="./contacts-grid.html"><span class="ml-1">Recharge History</span></a>
+            </ul>
+        </li>
+    </ul>
+
+    <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Organisation</span>
+    </p>
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+            <a class="nav-link" href="../docs/index.html">
+                <i class="fe fe-user fe-16"></i>
+                <span class="ml-3 item-text">Client Profile</span>
+            </a>
+        </li>
+    </ul>
+
+
+    <p class="text-muted nav-heading mt-4 mb-1">
+        <span>Documentation</span>
+    </p>
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+            <a class="nav-link" href="../docs/index.html">
+                <i class="fe fe-code fe-16"></i>
+                <span class="ml-3 item-text">Getting Start</span>
+            </a>
+        </li>
+    </ul>
+
+
+    <p class="text-muted nav-heading mt-4 mb-1">
+        <span>24 X 7 Help</span>
+    </p>
+    <ul class="navbar-nav flex-fill w-100 mb-2">
+        <li class="nav-item w-100">
+            <a class="nav-link" href="../docs/index.html">
+                <i class="fe fe-life-buoy fe-16"></i>
+                <span class="ml-3 item-text">Help Support</span>
+            </a>
+        </li>
+    </ul>
+
+    <div class="btn-box w-100 mt-4 mb-1"></div>
+</nav>
