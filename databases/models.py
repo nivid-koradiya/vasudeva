@@ -69,9 +69,6 @@ class Client(models.Model):
 
 
 
-
-
-
 # Client Admin functions
 def validate_username(username):
     username_len = len(username)
@@ -94,6 +91,8 @@ class ClientAdmin(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     password = models.CharField(max_length=1280,null=False,default=generate_default_password_hash)
     client = models.ForeignKey('Client',on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+    
     class Meta:
         verbose_name = ("ClientAdmin")
         verbose_name_plural = ("ClientAdmins")
@@ -102,4 +101,20 @@ class ClientAdmin(models.Model):
         return self.username
 
 
+
+#Quotas Functions:
+# Quotas MODEL:
+class Quota(models.Model):
+    id = models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    client = models.OneToOneField("databases.Client", on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    last_updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name = ("Quota")
+        verbose_name_plural = ("Quotas")
+        db_table = 'quotas'
+        
+    def __str__(self):
+        return self.client
 
