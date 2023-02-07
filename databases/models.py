@@ -4,10 +4,11 @@ import re
 import datetime as dt
 from django.forms import ValidationError
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 # Create your models here.
 
 
-#GENERAL FUNCTIONS
+# GENERAL FUNCTIONS
 def generate_uuid():
     return str(uuid.uuid4()) #RETURN UUID v4 in string format
 
@@ -16,8 +17,8 @@ def generate_uuid():
 
 
 
-#logging Functions:
-#Logging Models
+# Logging Functions:
+# Logging Models
 class LoginLog(models.Model):
     id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
     #TODO Add user field here
@@ -30,8 +31,8 @@ class LoginLog(models.Model):
     )
     mode_of_login = models.CharField(max_length=100,choices=mode_of_login_choices,default='browser')
     class Meta:
-        verbose_name = ("login_log")
-        verbose_name_plural = ("login_logs")
+        verbose_name = ("Login log")
+        verbose_name_plural = ("Login logs")
         db_table = "log_login"
         
     def __str__(self):
@@ -41,7 +42,7 @@ class LoginLog(models.Model):
 
 
 
-#ORG/CLIENT USER FUNCTIONS
+# ORG/CLIENT USER FUNCTIONS
 def client_mobile_validator(mobile):
     mobile= str(mobile)
     if mobile.isnumeric() and len(mobile)==10:
@@ -49,12 +50,11 @@ def client_mobile_validator(mobile):
     else:
         raise ValidationError("Mobile No is not valid")
         
-#ORG/CLIENT USER MODELS
+# ORG/CLIENT USER MODELS
 class Client(models.Model):
     id = models.CharField(default=generate_uuid, primary_key=True,max_length=42)
     organisation = models.CharField(max_length=255)
-    # admin = models.CharField() #TODO #ADD ADMIN TABLE USER HERE
-    mobile = models.CharField(max_length=10,validators=[])
+    mobile = models.CharField(max_length=10,validators=[client_mobile_validator])
     timestamp = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=False)
@@ -78,10 +78,7 @@ def validate_username(username):
     else:
         raise ValidationError("Username is not Valid")
 
-def generate_default_password_hash():
-    hashed_password = ""
-    hashed_password = make_password('admin')
-    return hashed_password
+
 # Client Admin:
 class ClientAdmin(models.Model):
     id = models.CharField(default=generate_uuid, primary_key=True,max_length=42)
@@ -89,10 +86,9 @@ class ClientAdmin(models.Model):
     username = models.CharField(max_length=64,validators=[validate_username],null=False)
     email = models.EmailField(max_length=254,null=False,default='defaultmail@mail.com')
     timestamp = models.DateTimeField(auto_now_add=True)
-    password = models.CharField(max_length=1280,null=False,default=generate_default_password_hash)
     client = models.ForeignKey('Client',on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
-    
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     class Meta:
         verbose_name = ("ClientAdmin")
         verbose_name_plural = ("ClientAdmins")
@@ -101,8 +97,7 @@ class ClientAdmin(models.Model):
         return self.username
 
 
-
-#Quotas Functions:
+# Quotas Functions:
 # Quotas MODEL:
 class Quota(models.Model):
     id = models.CharField(default=generate_uuid, primary_key=True,max_length=42)
@@ -114,7 +109,6 @@ class Quota(models.Model):
         verbose_name = ("Quota")
         verbose_name_plural = ("Quotas")
         db_table = 'quotas'
-        
-    def __str__(self):
-        return self.client
 
+    def __str__(self):
+        return str(self.client)
