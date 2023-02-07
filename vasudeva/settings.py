@@ -42,7 +42,10 @@ INSTALLED_APPS = [
     #CUSTOM APPS
     'databases',
     'api',
-    'frontend'
+    'frontend',
+    
+    #modular apps
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -61,7 +64,7 @@ ROOT_URLCONF = 'vasudeva.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,3 +132,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_ROOT = os.path.join('staticfiles')
+
+#CAPTCHA SETTINGS
+
+CAPTCHA_FONT_SIZE = 24
+CAPTCHA_LENGTH = 5
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
