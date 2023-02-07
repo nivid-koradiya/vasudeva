@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+{%load static%}
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+    <title>{{msg_title}}</title>
+    <!-- CSS IMPORTS -->
+    {% include 'req/req_css.html' %}
+    <!-- CSS IMPORTS ENDS -->
+</head>
+
+<body class="dark ">
+    <div class="wrapper vh-100">
+        <div class="row align-items-center h-100">
+            <form class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+                <div class="mx-auto text-center my-4">
+                    <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="/">
+                        <h1>VASUDEVA</h1>
+                    </a>
+                    <h4 class="my-3">{{msg_title}}</h4>
+                </div>
+
+                <div class="alert alert-{{msg_color}}" role="alert"> {{msg_body}}
+                </div>
+            
+                <a href="{{msg_btn_link}}" class="btn btn-md btn-primary btn-block ">{{msg_btn_text}}</a>
+                <p id="footer-copyright" class="mt-5 mb-3 text-muted"></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT IMPORTS -->
+    {% include 'req/req_js.html' %}
+    <!-- JAVASCRIPT IMPORT ENDS -->
+    <script>
+        var d = new Date();
+        var day = d.getFullYear();
+        document.getElementById('footer-copyright').innerHTML = "Vasudeva - CEX © " + day + " ";
+    </script>
+</body>
+
+</html>
+</body>
+
+</html>
