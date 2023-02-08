@@ -24,25 +24,16 @@
         >
           <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
-        <!-- <form class="form-inline mr-auto searchform text-muted">
-        <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search"
-          placeholder="Type something..." aria-label="Search" />
-      </form> -->
         <div>
           <h4 class="pt-2 d-inline"><mark>Vasudeva</mark></h4>
           <span class="badge badge-info">Beta</span>
         </div>
         <ul class="nav">
-          <li class="nav-item">
-            <a
-              class="nav-link text-muted my-2"
-              href="#"
-              id="modeSwitcher"
-              data-mode="light"
-            >
-              <i class="fe fe-sun fe-16"></i>
-            </a>
-          </li>
+          <!-- <li class="nav-item">
+          <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
+            <i class="fe fe-sun fe-16"></i>
+          </a>
+        </li> -->
           <li class="nav-item nav-notif">
             <a
               class="nav-link text-muted my-2"
@@ -55,32 +46,21 @@
             </a>
           </li>
           <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle text-muted pr-0"
-              href="#"
-              id="navbarDropdownMenuLink"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
+            <a class="nav-link dropdown-toggle text-muted pr-0" href="/admin">
               <span class="avatar avatar-sm mt-2">
                 <img
-                  src="{%static '/assets/avatars/face-5.jpg'%}"
+                  src="{%static '/assets/avatars/face-9.jpg'%}"
                   alt="..."
                   class="avatar-img rounded-circle"
                 />
-                <!-- profile pic for then user -->
+                <!-- profile pic for the user -->
               </span>
             </a>
-            <div
-              class="dropdown-menu dropdown-menu-right"
-              aria-labelledby="navbarDropdownMenuLink"
-            >
-              <a class="dropdown-item" href="#">Profile</a>
-              <a class="dropdown-item" href="#">Settings</a>
-              <a class="dropdown-item" href="#">Activities</a>
-            </div>
+            <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Settings</a>
+            <a class="dropdown-item" href="#">Activities</a>
+          </div> -->
           </li>
         </ul>
       </nav>
@@ -105,11 +85,63 @@
         <div class="container-fluid">
           <div class="row justify-content-center">
             <div class="col-12">
-              <h1 class="page-title">Let's start</h1>
+              <h2 class="page-title">Clients</h2>
+              <div class="row">
+                <!-- simple table -->
+                <div class="col-md-12 my-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">All Clients</h5>
+                      <p class="card-text">
+                        All the clients existing on this server is being
+                        displayed in below data-table.
+                      </p>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Org.</th>
+                            <th>Mobile</th>
+                            <th>DT-Stamp</th>
+                            <th>Last Modified</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for client in clients %}
+                          <tr>
+                            <td>{{client.id}}</td>
+                            <td>{{client.organisation}}</td>
+                            <td>{{client.mobile}}</td>
+                            <td>{{client.timestamp}}</td>
+                            <td>{{client.last_modified}}</td>
+                            {% if client.is_active %}
+                            <td>
+                              <span class="badge badge-pill badge-success"
+                                >Active</span
+                              >
+                            </td>
+                            {% else %}
+                            <td>
+                              <span class="badge badge-pill badge-danger"
+                                >In-Active</span
+                              >
+                            </td>
+
+                            {% endif %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <!-- simple table -->
+              </div>
             </div>
             <!-- .col-12 -->
           </div>
-          <!-- row close -->
+          <!-- .row -->
         </div>
         <!-- .container-fluid -->
 
@@ -262,7 +294,7 @@
             gauge1.setValue(90),
               gauge1.setValueAnimated({{ CPU }}, 1),
           window.setTimeout(e, 6e3);
-                    }) ());
+                      }) ());
     </script>
 
     <script>
@@ -292,7 +324,7 @@
             gauge1.setValue(90),
               gauge1.setValueAnimated({{ RAM }}, 1),
           window.setTimeout(e, 6e3);
-                    }) ());
+                      }) ());
     </script>
     <script>
       var gauge1,
@@ -321,7 +353,7 @@
             gauge1.setValue(90),
               gauge1.setValueAnimated({{ RAM }}, 1),
           window.setTimeout(e, 6e3);
-                    }) ());
+                      }) ());
     </script>
   </body>
 </html>
