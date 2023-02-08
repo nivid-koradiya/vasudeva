@@ -4,6 +4,7 @@ from .forms import AdminLoginForm
 from django.contrib.auth import authenticate,login,logout
 from databases.models import ClientAdmin
 from scripts.admin_user.user_details import get_username_from_request
+from scripts.logging.login_logout_logs import (admin_login_log,admin_logout_log)
 def admin_login(request):
     if request.user.is_authenticated:
         msg_context= {
@@ -31,6 +32,8 @@ def admin_login(request):
             if user is not None:
                 if user.is_staff:
                     login(request,user) #login the user to  session
+                    admin_login_log(request) # log the login record
+                    
                 else:
                     msg_context= {
                         'msg_color' : 'danger',
@@ -38,8 +41,8 @@ def admin_login(request):
                         'msg_body' : "Seems that you have no authority to login in as admin!",
                         'msg_btn_link' : '' ,
                         'msg_btn_text' : 'Back to home' 
-                }
-                return render(request,'main/messages.html',msg_context)
+                    }
+                    return render(request,'main/messages.html',msg_context)
 
                 
                 msg_context= {
@@ -93,18 +96,21 @@ def admin_dashbaord(request):
                 }
         return render(request,'main/messages.html',msg_context)
 
-
 def logout_view(request):
-    if str(request.user).lower() =="anonymoususer":
+    if str(request.user).lower() =="anonymoususer": #check if the non login user is trying to login.
         return redirect('/auth/admin-login/')
     
-    user = get_username_from_request(request)
+
+    user = get_username_from_request(request) # storing the username for messaging purpose.
+    admin_logout_log(request) # log the logout record.
     logout(request)
+
     msg_context= {
         'msg_color' : 'warning',
-        'msg_title' : "See you soon," + user ,
+        'msg_title' : "See you soon, " + user,
         'msg_body' : "You have succesfully logged out!, don't forget to have your coffee, developer!",
-        'msg_btn_link' : '/auth/admin-login/' ,
-        'msg_btn_text' : 'Admin Login' 
-            }
-    return render(request,'main/messages.html',msg_context)
+        'msg_btn_link' : '/auth/admin-login/',
+        'msg_btn_text' : 'Admin Login',
+    }
+    return render(request,'main/messages.html',msg_context) # returning the logout message page.
+

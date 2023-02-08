@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 import frontend.urls as frontend_url
+import api.urls as api_url
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("/captcha/", include('captcha.urls')),
-    path('',include(frontend_url))
+    path('',include(frontend_url)),
+    
+    # API URL CALLS ARE ROUTED HERE
+    path('api/',include(api_url)),
 ]

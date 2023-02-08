@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'frontend',
     
     #modular apps
-    'captcha'
+    'captcha',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

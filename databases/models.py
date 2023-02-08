@@ -30,6 +30,8 @@ class LoginLog(models.Model):
         # ('',''),
     )
     mode_of_login = models.CharField(max_length=100,choices=mode_of_login_choices,default='browser')
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    status = models.BooleanField()
     class Meta:
         verbose_name = ("Login log")
         verbose_name_plural = ("Login logs")
@@ -37,6 +39,8 @@ class LoginLog(models.Model):
         
     def __str__(self):
         return self.id
+
+
 
 
 
