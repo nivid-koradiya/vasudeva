@@ -29,7 +29,19 @@ def admin_login(request):
 
             # checking if any such user is present in our User table
             if user is not None:
-                login(request,user) #login the user to request's session
+                if user.is_staff:
+                    login(request,user) #login the user to  session
+                else:
+                    msg_context= {
+                        'msg_color' : 'danger',
+                        'msg_title' : "No Authorization!",
+                        'msg_body' : "Seems that you have no authority to login in as admin!",
+                        'msg_btn_link' : '' ,
+                        'msg_btn_text' : 'Back to home' 
+                }
+                return render(request,'main/messages.html',msg_context)
+
+                
                 msg_context= {
                     'msg_color' : 'success',
                     'msg_title' : "Login success!",
@@ -69,8 +81,18 @@ def admin_login(request):
 def admin_dashbaord(request):
     if str(request.user).lower() =="anonymoususer":
         return redirect('/auth/admin-login/')
-    return render(request,'main/blank.html')
-    return HttpResponse("ADMIN DASHBOAD HERE")
+    if request.user.is_staff:
+        return render(request,'main/blank.html')
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Not Authorized!",
+                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_btn_link' : '/auth/admin-login/' ,
+                    'msg_btn_text' : 'Admin Login' 
+                }
+        return render(request,'main/messages.html',msg_context)
+
 
 def logout_view(request):
     if str(request.user).lower() =="anonymoususer":

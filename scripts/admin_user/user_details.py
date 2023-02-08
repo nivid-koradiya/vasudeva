@@ -1,5 +1,6 @@
 from databases.models import ClientAdmin
+from django.contrib.auth.models import User
 import string
 def get_username_from_request(request):
-    user  = ClientAdmin.objects.get(user=request.user)
-    return string.capwords(str(user.name))
+    user = User.objects.get(username = request.user)
+    return string.capwords(str(user.first_name))
