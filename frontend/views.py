@@ -67,6 +67,9 @@ def admin_login(request):
     return render(request,'main/admin-login.html', context)
 
 def admin_dashbaord(request):
+    if str(request.user).lower() =="anonymoususer":
+        return redirect('/auth/admin-login/')
+    return render(request,'main/blank.html')
     return HttpResponse("ADMIN DASHBOAD HERE")
 
 def logout_view(request):
