@@ -1,291 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static %}
+  {% load static %}
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="icon" href="favicon.ico" />
-  <title>{{title}}</title>
-  {% include 'req/req_css.html' %}
-</head>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+    <title>{{title}}</title>
+    {% include 'req/req_css.html' %}
+  </head>
 
-<body class="vertical light">
-  <div class="wrapper">
-    <nav class="topnav navbar navbar-light">
-      <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
-        <i class="fe fe-menu navbar-toggler-icon"></i>
-      </button>
-      <div>
-        <h4 class="pt-2 d-inline"><mark>Vasudeva</mark></h4>
-        <span class="badge badge-info">Beta</span>
-      </div>
-      <ul class="nav">
-        <!-- <li class="nav-item">
+  <body class="vertical light">
+    <div class="wrapper">
+      <nav class="topnav navbar navbar-light">
+        <button
+          type="button"
+          class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar"
+        >
+          <i class="fe fe-menu navbar-toggler-icon"></i>
+        </button>
+        <div>
+          <h4 class="pt-2 d-inline"><mark>Vasudeva</mark></h4>
+          <span class="badge badge-info">Beta</span>
+        </div>
+        <ul class="nav">
+          <!-- <li class="nav-item">
           <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
             <i class="fe fe-sun fe-16"></i>
           </a>
         </li> -->
-        <li class="nav-item nav-notif">
-          <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
-            <span class="fe fe-bell fe-16"></span>
-            <span class="dot dot-md bg-success"></span>
-          </a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-muted pr-0" href="/admin">
-            <span class="avatar avatar-sm mt-2">
-              <img src="{%static '/assets/avatars/face-9.jpg'%}" alt="..." class="avatar-img rounded-circle" />
-              <!-- profile pic for the user -->
-            </span>
-          </a>
-          <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+          {% comment %}
+          <li class="nav-item nav-notif">
+            <a
+              class="nav-link text-muted my-2"
+              href="./#"
+              data-toggle="modal"
+              data-target=".modal-notif"
+            >
+              <span class="fe fe-bell fe-16"></span>
+              <span class="dot dot-md bg-success"></span>
+            </a>
+          </li>
+          {% endcomment %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-muted pr-0" href="/admin">
+              <span class="avatar avatar-sm mt-2">
+                <img
+                  src="{%static '/assets/avatars/face-9.jpg'%}"
+                  alt="..."
+                  class="avatar-img rounded-circle"
+                />
+                <!-- profile pic for the user -->
+              </span>
+            </a>
+            <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
             <a class="dropdown-item" href="#">Profile</a>
             <a class="dropdown-item" href="#">Settings</a>
             <a class="dropdown-item" href="#">Activities</a>
           </div> -->
-        </li>
-      </ul>
-    </nav>
-    <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
-      <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
-        <i class="fe fe-x"><span class="sr-only"></span></i>
-      </a>
-      <!-- Nav here -->
-      {% include 'sidebar/admin_sidebar.html' %}
-    </aside>
+          </li>
+        </ul>
+      </nav>
+      <aside
+        class="sidebar-left border-right bg-white shadow"
+        id="leftSidebar"
+        data-simplebar
+      >
+        <a
+          href="#"
+          class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3"
+          data-toggle="toggle"
+        >
+          <i class="fe fe-x"><span class="sr-only"></span></i>
+        </a>
+        <!-- Nav here -->
+        {% include 'sidebar/admin_sidebar.html' %}
+      </aside>
 
-    <main role="main" class="main-content">
-      <!--  container starts here -->
-      <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-12">
-            <h2 class="page-title">Clients</h2>
-            <div class="row">
-              <!-- simple table -->
-              <div class="col-md-12 my-4">
-                <div class="card shadow">
-                  <div class="card-body">
-                    <h5 class="card-title">All Clients</h5>
-                    <p class="card-text">All the clients existing on this server is being displayed in below data-table.
-                    </p>
-                    <table class="table table-hover">
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Org.</th>
-                          <th>Mobile</th>
-                          <th>DT-Stamp</th>
-                          <th>Last Modified</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for client in clients %}
-                        <tr>
-                          <td>{{client.id}}</td>
-                          <td>{{client.organisation}}</td>
-                          <td>{{client.mobile}}</td>
-                          <td>{{client.timestamp}}</td>
-                          <td>{{client.last_modified}}</td>
-                          {% if client.is_active %}
-                          <td><span class="badge badge-pill badge-success">Active</span></td>
-                          {% else %}
-                          <td><span class="badge badge-pill badge-danger">In-Active</span></td>
+      <main role="main" class="main-content">
+        <!--  container starts here -->
+        <div class="container-fluid">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <h2 class="page-title">Clients</h2>
+              <div class="row">
+                <!-- simple table -->
+                <div class="col-md-12 my-4">
+                  <div class="card shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">All Clients</h5>
+                      <p class="card-text">
+                        All the clients existing on this server is being
+                        displayed in below data-table.
+                      </p>
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Org.</th>
+                            <th>Mobile</th>
+                            <th>DT-Stamp</th>
+                            <th>Last Modified</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for client in clients %}
+                          <tr>
+                            <td>{{client.id}}</td>
+                            <td>{{client.organisation}}</td>
+                            <td>{{client.mobile}}</td>
+                            <td>{{client.timestamp}}</td>
+                            <td>{{client.last_modified}}</td>
+                            {% if client.is_active %}
+                            <td>
+                              <span class="badge badge-pill badge-success"
+                                >Active</span
+                              >
+                            </td>
+                            {% else %}
+                            <td>
+                              <span class="badge badge-pill badge-danger"
+                                >In-Active</span
+                              >
+                            </td>
 
-                          {% endif %}
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
+                            {% endif %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
-              </div> <!-- simple table -->
+                <!-- simple table -->
+              </div>
             </div>
+            <!-- .col-12 -->
+          </div>
+          <!-- .row -->
+        </div>
+        <!-- .container-fluid -->
 
-          </div> <!-- .col-12 -->
-        </div> <!-- .row -->
-      </div>
-      <!-- .container-fluid -->
-
-      <div class="modal fade modal-notif modal-slide" tabindex="-1" role="dialog" aria-labelledby="defaultModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-sm" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="defaultModalLabel">
-                Notifications
-              </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="list-group list-group-flush my-n3">
-                <div class="list-group-item bg-transparent">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <span class="fe fe-box fe-24"></span>
-                    </div>
-                    <div class="col">
-                      <small><strong>Package has uploaded successfull</strong></small>
-                      <div class="my-0 text-muted small">
-                        Package is zipped and uploaded
+        <div
+          class="modal fade modal-notif modal-slide"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="defaultModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="defaultModalLabel">
+                  Notifications
+                </h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <div class="list-group list-group-flush my-n3">
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-box fe-24"></span>
                       </div>
-                      <small class="badge badge-pill badge-light text-muted">1m ago</small>
+                      <div class="col">
+                        <small
+                          ><strong
+                            >Package has uploaded successfull</strong
+                          ></small
+                        >
+                        <div class="my-0 text-muted small">
+                          Package is zipped and uploaded
+                        </div>
+                        <small class="badge badge-pill badge-light text-muted"
+                          >1m ago</small
+                        >
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="list-group-item bg-transparent">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <span class="fe fe-download fe-24"></span>
-                    </div>
-                    <div class="col">
-                      <small><strong>Widgets are updated successfull</strong></small>
-                      <div class="my-0 text-muted small">
-                        Just create new layout Index, form, table
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-download fe-24"></span>
                       </div>
-                      <small class="badge badge-pill badge-light text-muted">2m ago</small>
+                      <div class="col">
+                        <small
+                          ><strong
+                            >Widgets are updated successfull</strong
+                          ></small
+                        >
+                        <div class="my-0 text-muted small">
+                          Just create new layout Index, form, table
+                        </div>
+                        <small class="badge badge-pill badge-light text-muted"
+                          >2m ago</small
+                        >
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="list-group-item bg-transparent">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <span class="fe fe-inbox fe-24"></span>
-                    </div>
-                    <div class="col">
-                      <small><strong>Notifications have been sent</strong></small>
-                      <div class="my-0 text-muted small">
-                        Fusce dapibus, tellus ac cursus commodo
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-inbox fe-24"></span>
                       </div>
-                      <small class="badge badge-pill badge-light text-muted">30m ago</small>
+                      <div class="col">
+                        <small
+                          ><strong>Notifications have been sent</strong></small
+                        >
+                        <div class="my-0 text-muted small">
+                          Fusce dapibus, tellus ac cursus commodo
+                        </div>
+                        <small class="badge badge-pill badge-light text-muted"
+                          >30m ago</small
+                        >
+                      </div>
+                    </div>
+                    <!-- / .row -->
+                  </div>
+                  <div class="list-group-item bg-transparent">
+                    <div class="row align-items-center">
+                      <div class="col-auto">
+                        <span class="fe fe-link fe-24"></span>
+                      </div>
+                      <div class="col">
+                        <small
+                          ><strong>Link was attached to menu</strong></small
+                        >
+                        <div class="my-0 text-muted small">
+                          New layout has been attached to the menu
+                        </div>
+                        <small class="badge badge-pill badge-light text-muted"
+                          >1h ago</small
+                        >
+                      </div>
                     </div>
                   </div>
                   <!-- / .row -->
                 </div>
-                <div class="list-group-item bg-transparent">
-                  <div class="row align-items-center">
-                    <div class="col-auto">
-                      <span class="fe fe-link fe-24"></span>
-                    </div>
-                    <div class="col">
-                      <small><strong>Link was attached to menu</strong></small>
-                      <div class="my-0 text-muted small">
-                        New layout has been attached to the menu
-                      </div>
-                      <small class="badge badge-pill badge-light text-muted">1h ago</small>
-                    </div>
-                  </div>
-                </div>
-                <!-- / .row -->
+                <!-- / .list-group -->
               </div>
-              <!-- / .list-group -->
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">
-                Clear All
-              </button>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary btn-block"
+                  data-dismiss="modal"
+                >
+                  Clear All
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </main>
-    <!-- main -->
-  </div>
-  <!-- .wrapper -->
-  {% include 'req/req_js.html' %}
-  <script>
-    var gauge1,
-      svgg1 = document.getElementById("gauge100");
-    svgg1 &&
-      ((gauge1 = Gauge(svgg1, {
-        max: 100,
-        dialStartAngle: -90,
-        dialEndAngle: -90.001,
-        value: 100,
-        showValue: !1,
-        label: function (e) {
-          return Math.round(100 * e) / 100;
-        },
-        color: function (e) {
-          return e < 20
-            ? base.primaryColor
-            : e < 40
-              ? base.successColor
-              : e < 60
-                ? base.warningColor
-                : base.dangerColor;
-        },
-      })),
-        (function e() {
-          gauge1.setValue(90),
-            gauge1.setValueAnimated({{ CPU }}, 1),
-        window.setTimeout(e, 6e3);
-                    }) ());
-  </script>
+      </main>
+      <!-- main -->
+    </div>
+    <!-- .wrapper -->
+    {% include 'req/req_js.html' %}
+    <script>
+      var gauge1,
+        svgg1 = document.getElementById("gauge100");
+      svgg1 &&
+        ((gauge1 = Gauge(svgg1, {
+          max: 100,
+          dialStartAngle: -90,
+          dialEndAngle: -90.001,
+          value: 100,
+          showValue: !1,
+          label: function (e) {
+            return Math.round(100 * e) / 100;
+          },
+          color: function (e) {
+            return e < 20
+              ? base.primaryColor
+              : e < 40
+                ? base.successColor
+                : e < 60
+                  ? base.warningColor
+                  : base.dangerColor;
+          },
+        })),
+          (function e() {
+            gauge1.setValue(90),
+              gauge1.setValueAnimated({{ CPU }}, 1),
+          window.setTimeout(e, 6e3);
+                      }) ());
+    </script>
 
-  <script>
-    var gauge1,
-      svgg1 = document.getElementById("gauge200");
-    svgg1 &&
-      ((gauge1 = Gauge(svgg1, {
-        max: 100,
-        dialStartAngle: -90,
-        dialEndAngle: -90.001,
-        value: 100,
-        showValue: !1,
-        label: function (e) {
-          return Math.round(100 * e) / 100;
-        },
-        color: function (e) {
-          return e < 20
-            ? base.primaryColor
-            : e < 40
-              ? base.successColor
-              : e < 60
-                ? base.warningColor
-                : base.dangerColor;
-        },
-      })),
-        (function e() {
-          gauge1.setValue(90),
-            gauge1.setValueAnimated({{ RAM }}, 1),
-        window.setTimeout(e, 6e3);
-                    }) ());
-  </script>
-  <script>
-    var gauge1,
-      svgg1 = document.getElementById("gauge900");
-    svgg1 &&
-      ((gauge1 = Gauge(svgg1, {
-        max: 100,
-        dialStartAngle: -90,
-        dialEndAngle: -90.001,
-        value: 100,
-        showValue: !1,
-        label: function (e) {
-          return Math.round(100 * e) / 100;
-        },
-        color: function (e) {
-          return e < 20
-            ? base.primaryColor
-            : e < 40
-              ? base.successColor
-              : e < 60
-                ? base.warningColor
-                : base.dangerColor;
-        },
-      })),
-        (function e() {
-          gauge1.setValue(90),
-            gauge1.setValueAnimated({{ RAM }}, 1),
-        window.setTimeout(e, 6e3);
-                    }) ());
-  </script>
-</body>
-
+    <script>
+      var gauge1,
+        svgg1 = document.getElementById("gauge200");
+      svgg1 &&
+        ((gauge1 = Gauge(svgg1, {
+          max: 100,
+          dialStartAngle: -90,
+          dialEndAngle: -90.001,
+          value: 100,
+          showValue: !1,
+          label: function (e) {
+            return Math.round(100 * e) / 100;
+          },
+          color: function (e) {
+            return e < 20
+              ? base.primaryColor
+              : e < 40
+                ? base.successColor
+                : e < 60
+                  ? base.warningColor
+                  : base.dangerColor;
+          },
+        })),
+          (function e() {
+            gauge1.setValue(90),
+              gauge1.setValueAnimated({{ RAM }}, 1),
+          window.setTimeout(e, 6e3);
+                      }) ());
+    </script>
+    <script>
+      var gauge1,
+        svgg1 = document.getElementById("gauge900");
+      svgg1 &&
+        ((gauge1 = Gauge(svgg1, {
+          max: 100,
+          dialStartAngle: -90,
+          dialEndAngle: -90.001,
+          value: 100,
+          showValue: !1,
+          label: function (e) {
+            return Math.round(100 * e) / 100;
+          },
+          color: function (e) {
+            return e < 20
+              ? base.primaryColor
+              : e < 40
+                ? base.successColor
+                : e < 60
+                  ? base.warningColor
+                  : base.dangerColor;
+          },
+        })),
+          (function e() {
+            gauge1.setValue(90),
+              gauge1.setValueAnimated({{ RAM }}, 1),
+          window.setTimeout(e, 6e3);
+                      }) ());
+    </script>
+  </body>
 </html>

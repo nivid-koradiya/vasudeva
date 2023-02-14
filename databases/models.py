@@ -5,6 +5,7 @@ import datetime as dt
 from django.forms import ValidationError
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
+import secrets as se
 # Create your models here.
 
 
@@ -116,3 +117,36 @@ class Quota(models.Model):
 
     def __str__(self):
         return str(self.client)
+    
+    
+# Surface user functions
+# Surface user Model
+class SurfaceUser(models.Model):
+    id = models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    name = models.CharField(max_length=50)
+    username = models.CharField(default='user',max_length=64)
+    password = models.CharField(default='',max_length=300)
+    client = models.ForeignKey(Client,on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=False)
+    desc = models.CharField(max_length=10000)
+    
+    
+# Surface User Auth Log functions
+# Surface User Auth Log
+class SurfaceUserAuthLog(models.Model):
+    id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    user = models.ForeignKey(SurfaceUser,on_delete=models.CASCADE, null=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    
+    
+# API KEY MODEL FUNCTIONS
+def generate_api_key():
+    api_key = se.token_urlsafe(64)
+    return api_key[:60]
+# API KEY MODEL 
+class ApiKeys(models.Model):
+    id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    key_value = models.CharField(max_length=64,default=generate_api_key)
+    client = models.ForeignKey(Client,on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)

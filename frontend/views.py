@@ -1,12 +1,13 @@
 from databases.models import ClientAdmin,Client
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import redirect, render
 from scripts.admin_user.user_details import get_username_from_request
 from scripts.logging.login_logout_logs import admin_login_log, admin_logout_log
-
-from .forms import AdminLoginForm
+from rest_framework.decorators import api_view
+from .forms import (AdminLoginForm,AjaxNewClient
+                    )
 
 
 def admin_login(request):
@@ -123,26 +124,109 @@ def logout_view(request):
 
 #ADMIN  CLIENTS - ALL
 def admin_all_client(request):
-    clients =Client.objects.all()
-    print(clients)
-    data = {
-        'title' : 'Vasudeva Admin Dashboard',
-        'clients' : clients
-    }
-    return render(request,'main/admin-client-all.html',data)
+    if str(request.user).lower() =="anonymoususer":
+        return redirect('/auth/admin-login/')
+    if request.user.is_staff:
+        clients =Client.objects.all()
+        data = {
+            'title' : 'Vasudeva Admin Dashboard',
+            'clients' : clients
+        }
+        return render(request,'main/admin-client-all.html',data)
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Not Authorized!",
+                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_btn_link' : '/auth/admin-login/' ,
+                    'msg_btn_text' : 'Admin Login' 
+                }
+        return render(request,'main/messages.html',msg_context)
 
 
-# def admin_add_client(request):
-#     data={
-        
-#     }
-#     return render(request,'main/admin-client-add.html',data)
-    
 
 
 def admin_delete_client(request):
-    data={
-        
-    }
-    return render(request,'main/admin-client-delete.html',data)
+    if str(request.user).lower() =="anonymoususer":
+        return redirect('/auth/admin-login/')
+    if request.user.is_staff:
+        clients =Client.objects.all()
+        data = {
+            'title' : 'Vasudeva Admin Dashboard',
+            'clients' : clients
+        }
+        return render(request,'main/admin-client-delete.html',data)
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Not Authorized!",
+                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_btn_link' : '/auth/admin-login/' ,
+                    'msg_btn_text' : 'Admin Login' 
+                }
+        return render(request,'main/messages.html',msg_context)
+
+
     
+
+def ajax_client_delete(request):
+    status = None
+    deleted_id = None
+    try:
+        id = request.POST.get('client_id')
+        # Client.objects.get(id = id).delete()
+        return  JsonResponse({
+            'deleted' : True,
+            'id' : id
+        })
+        
+    except:
+        return  JsonResponse({
+            'deleted' : False,
+            'id' : None
+        })
+        
+def ajax_client_status(request):
+    status = None
+    deleted_id = None
+    try:
+        id = request.POST.get('client_id')
+        client = Client.objects.get(id = id)
+        client.is_active = not (client.is_active)
+        client.save()
+        return  JsonResponse({
+            'success' : True
+        })
+        
+    except:
+        return  JsonResponse({
+            'success' : False
+        })
+        
+
+
+
+def ajax_client_new(request):
+    status = None
+    deleted_id = None
+    try:
+        # print(request.POST)
+        form = AjaxNewClient(request.POST)
+        if form.is_valid():
+            client = Client()
+            client.organisation = request.POST.get('company')
+            client.mobile = request.POST.get('phone')
+            client.save()
+            return  JsonResponse({
+                'success' : True
+            })
+            
+        else:
+            return  JsonResponse({
+                'success' : False
+            })
+    except:
+        return  JsonResponse({
+            'success' : False
+        })
+        

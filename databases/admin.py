@@ -5,7 +5,11 @@ from .models import (
     LoginLog,
     ClientAdmin,
     Client,
-    Quota
+    Quota,
+    SurfaceUser,
+    SurfaceUserAuthLog,
+    ApiKeys,
+    
 )
 
 class LoginLogAdmin(admin.ModelAdmin):
@@ -31,6 +35,29 @@ admin.site.register(Client,ClientAdmin)
 
 class QuotaAdmin(admin.ModelAdmin):
     readonly_fields=[
-        # 'id','timestamp'
+        'id',
     ]
 admin.site.register(Quota,QuotaAdmin)
+
+
+
+class SurfaceUserAdmin(admin.ModelAdmin):
+    readonly_fields=[
+        # 'id','timestamp'
+    ]
+admin.site.register(SurfaceUser,SurfaceUserAdmin)
+
+
+
+class SurfaceUseAuthLogAdmin(admin.ModelAdmin):
+    readonly_fields=[
+        # 'id','timestamp'
+    ]
+admin.site.register(SurfaceUserAuthLog,SurfaceUseAuthLogAdmin)
+
+class ApiKeysAdmin(admin.ModelAdmin):
+    readonly_fields=[
+        'id',
+    ]
+admin.site.register(ApiKeys,ApiKeysAdmin)
+
