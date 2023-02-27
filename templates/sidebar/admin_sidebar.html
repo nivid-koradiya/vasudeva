@@ -20,123 +20,73 @@
   </p>
   <ul class="navbar-nav flex-fill w-100 mb-2">
     <li class="nav-item dropdown">
-      <a
-        href="#ui-elements"
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="dropdown-toggle nav-link"
-      >
+      <a href="#ui-elements" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
         <i class="fe fe-users fe-16"></i>
         <span class="ml-3 item-text">Organisation - Clients</span>
       </a>
       <ul class="collapse list-unstyled pl-4 w-100" id="ui-elements">
         <li class="nav-item">
-          <a class="nav-link pl-3" href="{% url 'client_all'%}"
-            ><span class="ml-1 item-text">All Clients</span>
+          <a class="nav-link pl-3" href="{% url 'client_all'%}"><span class="ml-1 item-text">All Clients</span>
           </a>
         </li>
         {% comment %}
         <li class="nav-item">
-          <a class="nav-link pl-3" href="{% url 'client_add' %}"
-            ><span class="ml-1 item-text">Add Client</span></a
-          >
+          <a class="nav-link pl-3" href="{% url 'client_add' %}"><span class="ml-1 item-text">Add Client</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./ui-typograpy.html"
-            ><span class="ml-1 item-text">Edit Client</span></a
-          >
+          <a class="nav-link pl-3" href="./ui-typograpy.html"><span class="ml-1 item-text">Edit Client</span></a>
         </li>
         {% endcomment %}
         <li class="nav-item">
-          <a class="nav-link pl-3" href="{% url 'client_manage' %}"
-            ><span class="ml-1 item-text">Manage Client</span></a
-          >
+          <a class="nav-link pl-3" href="{% url 'client_manage' %}"><span class="ml-1 item-text">Manage
+              Client</span></a>
         </li>
       </ul>
     </li>
     <li class="nav-item dropdown">
-      <a
-        href="#forms"
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="dropdown-toggle nav-link"
-      >
+      <a href="#forms" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
         <i class="fe fe-user fe-16"></i>
-        <span class="ml-3 item-text">Users</span>
+        <span class="ml-3 item-text">Client Admin</span>
       </a>
       <ul class="collapse list-unstyled pl-4 w-100" id="forms">
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./form_elements.html"
-            ><span class="ml-1 item-text">All Users </span></a
-          >
-        </li>
-        {% comment %}
-        <li class="nav-item">
-          <a class="nav-link pl-3" href="./form_elements.html"
-            ><span class="ml-1 item-text">Add User </span></a
-          >
+          <a class="nav-link pl-3" href="{% url 'clientadmin_all'%}"><span class="ml-1 item-text">All Client Admin
+            </span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./form_elements.html"
-            ><span class="ml-1 item-text">Modify User </span></a
-          >
-        </li>
-        {% endcomment %}
-        <li class="nav-item">
-          <a class="nav-link pl-3" href="./form_elements.html"
-            ><span class="ml-1 item-text">Modify Users </span></a
-          >
+          <a class="nav-link pl-3" href="{% url 'clientadmin_manage'%}"><span class="ml-1 item-text">Modify Client Admin
+            </span></a>
         </li>
       </ul>
     </li>
     <li class="nav-item dropdown">
-      <a
-        href="#tables"
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="dropdown-toggle nav-link"
-      >
+      <a href="#tables" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
         <i class="fe fe-key fe-16"></i>
         <span class="ml-3 item-text">API Keys</span>
       </a>
       <ul class="collapse list-unstyled pl-4 w-100" id="tables">
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./table_basic.html"
-            ><span class="ml-1 item-text">Lookup Keys</span></a
-          >
+          <a class="nav-link pl-3" href="./table_basic.html"><span class="ml-1 item-text">Lookup Keys</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./table_datatables.html"
-            ><span class="ml-1 item-text">Issue Key</span></a
-          >
+          <a class="nav-link pl-3" href="./table_datatables.html"><span class="ml-1 item-text">Issue Key</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./table_advanced.html"
-            ><span class="ml-1 item-text">Deactivate Keys</span></a
-          >
+          <a class="nav-link pl-3" href="./table_advanced.html"><span class="ml-1 item-text">Deactivate Keys</span></a>
         </li>
       </ul>
     </li>
     <li class="nav-item dropdown">
-      <a
-        href="#charts"
-        data-toggle="collapse"
-        aria-expanded="false"
-        class="dropdown-toggle nav-link"
-      >
+      <a href="#charts" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
         <i class="fe fe-hard-drive fe-16"></i>
         <span class="ml-3 item-text">Quotas</span>
       </a>
       <ul class="collapse list-unstyled pl-4 w-100" id="charts">
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./chart-inline.html"
-            ><span class="ml-1 item-text">Quota List</span></a
-          >
+          <a class="nav-link pl-3" href="./chart-inline.html"><span class="ml-1 item-text">Quota List</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link pl-3" href="./chart-chartjs.html"
-            ><span class="ml-1 item-text">Quota Allowance</span></a
-          >
+          <a class="nav-link pl-3" href="./chart-chartjs.html"><span class="ml-1 item-text">Quota Allowance</span></a>
         </li>
       </ul>
     </li>

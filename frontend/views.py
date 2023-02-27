@@ -6,7 +6,8 @@ from django.shortcuts import redirect, render
 from scripts.admin_user.user_details import get_username_from_request
 from scripts.logging.login_logout_logs import admin_login_log, admin_logout_log
 from rest_framework.decorators import api_view
-from .forms import (AdminLoginForm,AjaxNewClient
+from django.contrib.auth.models import User
+from .forms import (AdminLoginForm,AjaxNewClient,AjaxNewClientAdmin
                     )
 
 
@@ -28,7 +29,7 @@ def admin_login(request):
 
         if form.is_valid(): # if form is valid the  move towards the authentication of recieved credentials
             # extracting the credentials from post request
-            username = request.POST.get("username")
+            username = request.POST.get("username").lower()
             password = request.POST.get("password") 
             # authenticating the user and pass to get a user form user model
             user = authenticate(username=username,password=password)
@@ -167,7 +168,53 @@ def admin_delete_client(request):
         return render(request,'main/messages.html',msg_context)
 
 
-    
+
+def admin_client_admin_all(request):
+    if str(request.user).lower() =="anonymoususer":
+        return redirect('/auth/admin-login/')
+    if request.user.is_staff:
+        clients =ClientAdmin.objects.all()
+        data = {
+            'title' : 'Vasudeva Admin Dashboard',
+            'clients' : clients
+        }
+        return render(request,'main/admin-clientadmin-all.html',data)
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Not Authorized!",
+                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_btn_link' : '/auth/admin-login/' ,
+                    'msg_btn_text' : 'Admin Login' 
+                }
+        return render(request,'main/messages.html',msg_context)
+
+
+def admin_client_admin_manage(request):
+    if str(request.user).lower() =="anonymoususer":
+        return redirect('/auth/admin-login/')
+    if request.user.is_staff:
+        cl = Client.objects.all()
+        clients =ClientAdmin.objects.all()
+        data = {
+            'title' : 'Vasudeva Admin Dashboard',
+            'clients' : clients,
+            'cl' : cl,
+        }
+        return render(request,'main/admin-clientadmin-manage.html',data)
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Not Authorized!",
+                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_btn_link' : '/auth/admin-login/' ,
+                    'msg_btn_text' : 'Admin Login' 
+                }
+        return render(request,'main/messages.html',msg_context)
+
+
+
+# AJAX REQUESTS HANDLING VIEWS:
 
 def ajax_client_delete(request):
     status = None
@@ -185,7 +232,7 @@ def ajax_client_delete(request):
             'deleted' : False,
             'id' : None
         })
-        
+
 def ajax_client_status(request):
     status = None
     deleted_id = None
@@ -197,12 +244,12 @@ def ajax_client_status(request):
         return  JsonResponse({
             'success' : True
         })
-        
+
     except:
         return  JsonResponse({
             'success' : False
         })
-        
+
 
 
 
@@ -230,3 +277,54 @@ def ajax_client_new(request):
             'success' : False
         })
         
+        
+#CLIENTADMINS AJAX REQUEST HANDLERS
+
+def ajax_clientadmin_status(request):
+    status = None
+    deleted_id = None
+    try:
+        id = request.POST.get('client_id')
+        client = ClientAdmin.objects.get(id = id)
+        client.is_active = not (client.is_active)
+        client.save()
+        return  JsonResponse({
+            'success' : True
+        })
+        
+    except:
+        return  JsonResponse({
+            'success' : False
+        })
+        
+def ajax_clientadmin_new(request):
+    status = None
+    deleted_id = None
+    try:
+        # print(request.POST)
+        form = AjaxNewClientAdmin(request.POST)
+        if form.is_valid():
+            # print("FORRRRRRMMMM VALID!!!!")
+            client_admin = ClientAdmin()
+            client_admin.username = request.POST.get('username')
+            client_admin.name = request.POST.get('name')
+            client_admin.email = request.POST.get('email')
+            client_admin.client = Client.objects.get(id = request.POST.get('user_select'))
+            user = User()
+            user.username =request.POST.get('username')
+            user.set_password(request.POST.get('password'))
+            user.is_active = True
+            user.save()
+            client_admin.user = user
+            client_admin.save()            
+            return  JsonResponse({
+                'success' : True
+            })
+        else:
+            return  JsonResponse({
+                'success' : False
+            })
+    except:
+        return  JsonResponse({
+            'success' : False
+        })

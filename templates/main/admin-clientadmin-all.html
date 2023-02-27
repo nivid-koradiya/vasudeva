@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="favicon.ico" />
+    <title>{{title}}</title>
+    {% include 'req/req_css.html' %}
+</head>
+
+<body class="vertical light">
+    <div class="wrapper">
+        <nav class="topnav navbar navbar-light">
+            <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
+                <i class="fe fe-menu navbar-toggler-icon"></i>
+            </button>
+            <div>
+                <h4 class="pt-2 d-inline"><mark>Vasudeva</mark></h4>
+                <span class="badge badge-info">Beta</span>
+            </div>
+            <ul class="nav">
+
+                <!-- <li class="nav-item nav-notif">
+                    <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
+                        <span class="fe fe-bell fe-16"></span>
+                        <span class="dot dot-md bg-success"></span>
+                    </a>
+                </li> -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-muted pr-0" href="/admin">
+                        <span class="avatar avatar-sm mt-2">
+                            <img src="{%static '/assets/avatars/face-9.jpg'%}" alt="..."
+                                class="avatar-img rounded-circle" />
+                            <!-- profile pic for the user -->
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <aside class="sidebar-left border-right bg-white shadow" id="leftSidebar" data-simplebar>
+            <a href="#" class="btn collapseSidebar toggle-btn d-lg-none text-muted ml-2 mt-3" data-toggle="toggle">
+                <i class="fe fe-x"><span class="sr-only"></span></i>
+            </a>
+            <!-- Nav here -->
+            {% include 'sidebar/admin_sidebar.html' %}
+        </aside>
+
+        <main role="main" class="main-content">
+            <!--  container starts here -->
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <h2 class="page-title">Client Admin Management</h2>
+                        <div class="row">
+                            <!-- simple table -->
+                            <div class="col-md-12 my-4">
+                                <div class="card shadow">
+                                    <div class="card-body">
+                                        <h5 class="card-title">View All Client Admins</h5>
+                                        <p class="card-text">
+                                            This Page is a static reference for all of the client admins
+                                        </p>
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Delete</th>
+                                                    <th>Toggle</th>
+                                                    <th>ID</th>
+                                                    <th>Username</th>
+                                                    <th>Name</th>
+                                                    <th>E-mail</th>
+                                                    <th>Client</th>
+                                                    <th>User</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for client in clients %}
+                                                <tr id="{{client.id}}">
+                                                    <td>
+                                                        <button type="button"
+                                                            class="btn btn-sm mb-2 btn-outline-danger delete_client"
+                                                            data-catid="{{client.id}}">
+                                                            <i class="fe fe-trash-2 fe-16 py-1"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        {% if client.is_active %}
+                                                        <button type="button"
+                                                            class="btn btn-sm mb-2 btn-danger client_status"
+                                                            data-catid="{{client.id}}">
+                                                            <i class="fe fe-power fe-16 py-1"></i>
+                                                        </button>
+                                                        {% else %}
+                                                        <button type="button"
+                                                            class="btn btn-sm mb-2 btn-success client_status"
+                                                            data-catid="{{client.id}}">
+                                                            <i class="fe fe-power fe-16 py-1"></i>
+                                                        </button>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{client.id}}</td>
+                                                    <td>{{client.username}}</td>
+                                                    <td>{{client.name}}</td>
+                                                    <td>{{client.email}}</td>
+                                                    <td>{{client.client}}</td>
+                                                    <td>{{client.user}}</td>
+                                                    {% if client.is_active %}
+                                                    <td>
+                                                        <span class="badge badge-pill badge-success">Active</span>
+                                                    </td>
+                                                    {% else %}
+                                                    <td>
+                                                        <span class="badge badge-pill badge-danger">In-Active</span>
+                                                    </td>
+
+                                                    {% endif %}
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- simple table -->
+                        </div>
+
+                        <!-- <div class="row">
+                            <div class="col-md-6">
+                                <d
+                                iv class="card shadow">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            Create New Client
+                                        </h5>
+
+                                        <div class="col-md-12 mt-3 p-0">
+                                            <form id="new_org" method="post">
+                                                {% csrf_token %}
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">Company</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Company Name"
+                                                        name="company" aria-label="Username"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1">+91</span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="Phone no."
+                                                        name="phone" aria-label="Username"
+                                                        aria-describedby="basic-addon1">
+                                                </div>
+
+                                                <div class="text-center"></div>
+                                                <a href="#submit_modal" class="trigger-btn btn btn-primary"
+                                                    data-toggle="modal"> Submit</a>
+                                                <div id="submit_modal" class="modal fade" aria-hidden="true"
+                                                    style="display: none;">
+                                                    <div class="modal-dialog modal-confirm">
+                                                        <div class="modal-dialog modal-confirm">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header justify-content-center">
+                                                                    <h4>Confirm to Procced</h4>
+                                                                    <button type="button" class="close"
+                                                                        data-dismiss="modal" aria-hidden="true"><i
+                                                                            class="fe fe-x"></i></button>
+                                                                </div>
+                                                                <div class="modal-body text-center">
+                                                                    <div class=" text-center mt-1">
+                                                                        <input type="submit" class="btn btn-primary"
+                                                                            value="Confirm">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+                    <!-- .col-12 -->
+                </div>
+                <!-- .row -->
+            </div>
+            <!-- .container-fluid -->
+
+
+        </main>
+        <!-- main -->
+    </div>
+    <!-- .wrapper -->
+
+    <!-- MODALS -->
+    <a href="#myModal" id="error_modal" class="trigger-btn" data-toggle="modal"></a>
+    <div id="myModal" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h4>Incorrect details recieved !</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+                            class="fe fe-x"></i></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5>Follow the following rules !</h5>
+                    <p>1. Enter the Company name according to rules
+                        specified</p>
+                    <p>2. Enter the 10 Digit Phone number only.</p>
+                    <button class="btn btn-danger" data-dismiss="modal">Try Again</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#myModal2" id="success_modal" class="trigger-btn" data-toggle="modal"></a>
+    <div id="myModal2" class="modal fade" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center">
+                    <h4>Success !</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+                            class="fe fe-x"></i></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h5>Organisation registered successfully</h5>
+                </div>
+                <div class=" text-center mb-3">
+                    <i class="fe fe-check-circle fe-24 text-success "></i>
+                </div>
+                <div class="modal-body text-center">
+                    <a href="{% url 'client_all'%}">
+                        <button class="btn btn-secondary">To Clients</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- MODALS ENDS -->
+        {% include 'req/req_js.html' %}
+
+        <script type="text/javascript">
+            $(".delete_client").click(function () {
+                var catid;
+                catid = $(this).attr("data-catid");
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'ajax_client_delete' %}",
+                    data: {
+                        client_id: catid,
+                        csrfmiddlewaretoken: "{{ csrf_token }}",
+                    },
+                    success: function (data) {
+                        if (data['deleted']) {
+                            document.getElementById(catid).remove();
+                        }
+                    },
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(".client_status").click(function () {
+                var catid;
+                catid = $(this).attr("data-catid");
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'ajax_client_status' %}",
+                    data: {
+                        client_id: catid,
+                        csrfmiddlewaretoken: "{{ csrf_token }}",
+                    },
+                    success: function (data) {
+                        // function here
+                        if (data.success) {
+                            location.reload();
+                        }
+                    },
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $("#new_org").submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+
+                    type: "POST",
+                    url: "{% url 'ajax_client_new' %}",
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        // function here
+                        if (data.success) {
+                            //console.log("ACCEPTED");
+                            document.getElementById("success_modal").click();
+                        }
+                        else {
+                            //console.log("FAILED");
+                            document.getElementById("error_modal").click();
+                        }
+                    },
+                });
+            });
+        </script>
+
+
+</body>
+
+</html>
