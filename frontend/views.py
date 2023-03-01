@@ -214,6 +214,13 @@ def admin_client_admin_manage(request):
 
 
 
+def client_signup(request):
+    msg_context={
+        
+    }
+    return render(request,'main/client-signup.html',msg_context)
+
+
 # AJAX REQUESTS HANDLING VIEWS:
 
 def ajax_client_delete(request):
