@@ -49,7 +49,7 @@
 
         <div class="form-group">
           <label for="email" class="sr-only">Email</label>
-          <input type="text" id="email" class="form-control form-control-lg" placeholder="E-Mail ID" required=""
+          <input type="email" id="email" class="form-control form-control-lg" placeholder="E-Mail ID" required=""
             name="email">
         </div>
 
@@ -84,9 +84,30 @@
   {% include 'req/req_js.html' %}
   <!-- JAVASCRIPT IMPORT ENDS -->
 
-</body>
 
-</html>
+
+  <script type="text/javascript">
+    $("#new_org").submit(function (e) {
+      e.preventDefault();
+      $.ajax({
+
+        type: "POST",
+        url: "{% url 'ajax_client_new' %}",
+        data: $(this).serialize(),
+        success: function (data) {
+          // function here
+          if (data.success) {
+            //console.log("ACCEPTED");
+            document.getElementById("success_modal").click();
+          }
+          else {
+            //console.log("FAILED");
+            document.getElementById("error_modal").click();
+          }
+        },
+      });
+    });
+  </script>
 </body>
 
 </html>
