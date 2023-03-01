@@ -13,7 +13,8 @@ from .views import (
     ajax_client_status,
     ajax_client_new,
     ajax_clientadmin_status,
-    ajax_clientadmin_new
+    ajax_clientadmin_new,
+    ajax_new_client_signup,
     
 
     )
@@ -34,6 +35,7 @@ urlpatterns = [
     path("data/client/new",ajax_client_new,name='ajax_client_new'),
     path("data/clientadmin/status",ajax_clientadmin_status,name='ajax_clientadmin_status'),
     path("data/clientadmin/new",ajax_clientadmin_new,name='ajax_clientadmin_new'),
+    path("data/client/signup",ajax_new_client_signup,name='ajax_new_client_signup'),
     #authentication Urls
     path("auth/admin-login/",admin_login,name='admin_login'),
     path("auth/client-signup/",client_signup,name='client_signup'),
