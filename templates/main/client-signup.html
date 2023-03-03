@@ -12,13 +12,53 @@
   <!-- CSS IMPORTS -->
   {% include 'req/req_css.html' %}
   <!-- CSS IMPORTS ENDS -->
+  <style>
+    .loader {
+      width: 48px;
+      height: 48px;
+      border: 5px solid;
+      border-color: #FF3D00 transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
 
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .bottomright {
+      position: fixed;
+      left: 0%;
+      bottom: 100px;
+
+      background-color: lightblue;
+      padding: 3px;
+    }
+
+    .bottomright:hover {
+      right: 0px;
+      left: unset;
+    }
+  </style>
 </head>
 
+
 <body class="light ">
+
+  {% include 'preloader/preloader.html' %}
+
   <div class="wrapper vh-100">
+
     <div class="row align-items-center h-100">
-      <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
+      <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" id="new_client">
         {% csrf_token %}
         <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
           <h1>VASUDEVA</h1>
@@ -42,6 +82,12 @@
         </div>
 
         <div class="form-group">
+          <label for="password" class="sr-only">Admin Password</label>
+          <input type="password" id="password" class="form-control form-control-lg" placeholder="Password" required=""
+            name="password">
+        </div>
+
+        <div class="form-group">
           <label for="name" class="sr-only">Admin Name</label>
           <input type="text" id="name" class="form-control form-control-lg" placeholder="Admin Name" required=""
             name="name">
@@ -62,13 +108,56 @@
               &
               condition</a> of using
             Vasudeva API services.</label>
+
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register Company</button>
-        <p id="footer-copyright" class="mt-5 mb-3 text-muted"></p>
+
+
+
+
+
+
+
+
+
+        <p style="color:rgb(255, 41, 41)" id="err"></p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register Company</button> <br>
+        <a class="btn btn-sm btn-secondary" href="{% url 'client_login'%}">Client login</a> <br> <br>
+        <a href="{% url 'admin_login'%}">Admin login</a>
+        <p id="footer-copyright" class="mt-3 mb-3 text-muted"></p>
         <p id="footer-time" class=" mb-3 text-muted"></p>
+
+
+        <!-- Button trigger modal -->
+        <button type="button" class="btn mb-2 btn-outline-success" data-toggle="modal" data-target="#verticalModal"
+          id="loading_modal" hidden>
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="verticalModal" tabindex="-1" role="dialog" aria-labelledby="verticalModalTitle"
+          aria-hidden="true" style="display: none;">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body" id="modal_data"> <span class="loader"></span>
+                <button type="button" class="btn mb-2 btn-secondary" id="hide_loading_modal" data-dismiss="modal"
+                  hidden></button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+
       </form>
+      {% if qr %}
+      <img style="height:50px" class="bottomright" id="barcode" src="https://barcodeapi.org/api/qr/{{qr}}">
+      {% endif %}
     </div>
   </div>
+
+  <!-- JAVASCRIPT IMPORTS -->
+  {% include 'req/req_js.html' %}
+  <!-- JAVASCRIPT IMPORT ENDS -->
 
   <script>
     var d = new Date();
@@ -80,34 +169,63 @@
   <script>
     document.getElementById("id_captcha_1").placeholder = "Captcha";
   </script>
-  <!-- JAVASCRIPT IMPORTS -->
-  {% include 'req/req_js.html' %}
-  <!-- JAVASCRIPT IMPORT ENDS -->
 
 
-
+  <!-- Script to send the data to server for validation -->
   <script type="text/javascript">
-    $("#new_org").submit(function (e) {
+
+    function show_success() {
+      let m = document.getElementById("modal_data");
+      m.innerHTML = '';
+      m.innerHTML += '<div class="alert alert-success" role="alert"> <span class="fe fe-check fe-16 mr-2" > </span> Signup was Successful, Confirmation Mail has been sent to your mail box!</div> ';
+    }
+
+    function show_fail() {
+      let m = document.getElementById("modal_data");
+      m.innerHTML = '';
+      m.innerHTML += '<div class="alert alert-danger" role="alert"> <span class="fe fe-x fe-16 mr-2" > </span> Signup Failed </div> ';
+    }
+    $("#new_client").submit(function (e) {
+      document.getElementById("loading_modal").click();
       e.preventDefault();
       $.ajax({
-
         type: "POST",
-        url: "{% url 'ajax_client_new' %}",
+        url: "{% url 'ajax_new_client_signup' %}",
         data: $(this).serialize(),
         success: function (data) {
           // function here
-          if (data.success) {
-            //console.log("ACCEPTED");
-            document.getElementById("success_modal").click();
+          if (data.status) {
+            console.log("ACCEPTED");
+            show_success();
           }
           else {
-            //console.log("FAILED");
-            document.getElementById("error_modal").click();
+            let hcpdata = data.error;
+            let list = document.getElementById("err");
+            list.innerHTML = "";
+            list.innerHTML += "<ul>";
+            for (let key in hcpdata) {
+              if (hcpdata.hasOwnProperty(key)) {
+                value = hcpdata[key];
+                console.log(key, value);
+                list.innerHTML += "<li>" + `${key} : ${value}` + "</li>" + "<br>";
+              }
+            }
+            list.innerHTML += "</ul>";
+            show_fail();
           }
         },
       });
     });
   </script>
+  <!-- server validation script ends -->
+  <script>
+    var loader = document.getElementById("preloader");
+    window.addEventListener("load", function () {
+      $("#preloader").fadeOut(1000 / 2);
+    })
+  </script>
+
+
 </body>
 
 </html>

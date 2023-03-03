@@ -138,4 +138,6 @@ STATIC_ROOT = os.path.join('staticfiles')
 
 CAPTCHA_FONT_SIZE = 24
 CAPTCHA_LENGTH = 5
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge'
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.word_challenge'
+CAPTCHA_DICTIONARY_MAX_LENGTH = 5
+CAPTCHA_LETTER_ROTATION = (-25, 30)

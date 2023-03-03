@@ -1,4 +1,5 @@
 from databases.models import ClientAdmin,Client
+import time
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
 from django.http import HttpResponse,JsonResponse
@@ -7,7 +8,7 @@ from scripts.admin_user.user_details import get_username_from_request
 from scripts.logging.login_logout_logs import admin_login_log, admin_logout_log
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
-from .forms import (AdminLoginForm,AjaxNewClient,AjaxNewClientAdmin
+from .forms import (AdminLoginForm,AjaxNewClient,AjaxNewClientAdmin, AjaxClientSignup
                     )
 
 
@@ -213,12 +214,37 @@ def admin_client_admin_manage(request):
         return render(request,'main/messages.html',msg_context)
 
 
-
 def client_signup(request):
+    form = AjaxClientSignup()
     msg_context={
-        
+        'form' : form,
+        # "qr" : str(request.headers['Cookie']).split('=')[-1],
     }
     return render(request,'main/client-signup.html',msg_context)
+
+
+
+def client_login(request):
+    return render(request=request,template_name='main/client-login.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # AJAX REQUESTS HANDLING VIEWS:
@@ -335,3 +361,50 @@ def ajax_clientadmin_new(request):
         return  JsonResponse({
             'success' : False
         })
+
+def ajax_new_client_signup(request):
+    if request.method == "POST":
+        print(request.POST)
+        rec_form = AjaxClientSignup(request.POST)
+        if rec_form.is_valid():
+            try:
+                client = Client()
+                client.organisation = request.POST.get('org_name')
+                client.mobile = request.POST.get('mobile')
+                client.save()
+                client_admin = ClientAdmin()
+                client_admin.username = request.POST.get('username')
+                client_admin.name = request.POST.get('name')
+                client_admin.email = request.POST.get('email')
+                client_admin.client = client
+                user = User()
+                user.username =request.POST.get('username')
+                user.set_password(request.POST.get('password'))
+                user.is_active = True
+                user.save()
+                client_admin.user = user
+                client_admin.save()      
+                time.sleep(2)
+                return JsonResponse({
+                'status' : True,
+                })
+            except:
+                return JsonResponse({
+                'status' : False,
+                })
+            
+        else:
+            errors = (rec_form.errors)
+            print(errors)
+            time.sleep(5)
+            return JsonResponse({
+            'status' : False,
+            'error' : errors
+            })
+
+    else:
+        time.sleep(5)
+        return JsonResponse({
+        'status' : False,
+    })
+    

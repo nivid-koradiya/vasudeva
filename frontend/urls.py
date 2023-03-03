@@ -7,6 +7,7 @@ from .views import (
     admin_client_admin_all,
     admin_client_admin_manage,
     client_signup,
+    client_login,
     
     #ajax requests.
     ajax_client_delete,
@@ -39,6 +40,7 @@ urlpatterns = [
     #authentication Urls
     path("auth/admin-login/",admin_login,name='admin_login'),
     path("auth/client-signup/",client_signup,name='client_signup'),
+    path("auth/client-login/",client_login,name='client_login'),
     path("auth/logout/",logout_view, name="logout"),
     
 

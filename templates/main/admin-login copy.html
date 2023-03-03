@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+{%load static%}
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="icon" href="favicon.ico" />
+  <title>Vasudeva Admin Login</title>
+  <!-- CSS IMPORTS -->
+  {% include 'req/req_css.html' %}
+  <!-- CSS IMPORTS ENDS -->
+
+</head>
+
+<body class="light ">
+  <div class="wrapper vh-100">
+    <div class="row align-items-center h-100">
+      <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
+        {% csrf_token %}
+        <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
+          <h1>VASUDEVA</h1>
+        </a>
+        <h1 class="h6 mb-3">ADMIN PORTAL</h1>
+        <div class="form-group">
+          <label for="inputEmail" class="sr-only">Username</label>
+          <input type="text" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required=""
+            name="username" autofocus="">
+        </div>
+        <div class="form-group">
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password"
+            name="password" required="">
+        </div>
+        <div class="form-group">
+          {{form.captcha}}
+        </div>
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me"> Stay logged in </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Let me in</button>
+        <p id="footer-copyright" class="mt-5 mb-3 text-muted"></p>
+        <p id="footer-time" class=" mb-3 text-muted"></p>
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    var d = new Date();
+    var day = d.getFullYear();
+    document.getElementById('footer-copyright').innerHTML = "Vasudeva - CEX © " + day + " ";
+
+    function checkTime(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    }
+    function startTime() {
+      var today = new Date();
+      var h = today.getHours();
+      var m = today.getMinutes();
+      var s = today.getSeconds();
+      // add a zero in front of numbers<10
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById('footer-time').innerHTML = "Server Time -" + h + ":" + m + ":" + s;
+      t = setTimeout(function () {
+        startTime()
+      }, 500);
+    }
+    startTime();
+  </script>
+
+  <script>
+    document.getElementById("id_captcha_1").placeholder = "Captcha";
+  </script>
+  <!-- JAVASCRIPT IMPORTS -->
+  {% include 'req/req_js.html' %}
+  <!-- JAVASCRIPT IMPORT ENDS -->
+
+</body>
+
+</html>
+</body>
+
+</html>
