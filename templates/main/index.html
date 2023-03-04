@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vasudeva-API</title>
+    <meta content="summary_large_image" name="twitter:card" />
+    <meta content="website" property="og:type" />
+    <meta content="Api for students" property="og:description" />
+    <meta content="https://27gub4lfa2.preview-postedstuff.com/V2-sal3-ej4R-ZlFs-ZZq4l/vasudeva-api/"
+        property="og:url" />
+    <meta content="https://pro-bee-beepro-thumbnail.getbee.io/messages/916565/900915/1823904/8617707_large.jpg"
+        property="og:image" />
+    <meta content="Vasudeva-API" property="og:title" />
+    <meta content="Api for students" name="description" />
+    <meta charset="utf-8" />
+    <meta content="width=device-width" name="viewport" />
+    <style>
+        .bee-row,
+        .bee-row-content {
+            position: relative
+        }
+
+        .bee-button .content {
+            text-align: center
+        }
+
+        .bee-row-3,
+        body {
+            background-color: #fff
+        }
+
+        body {
+            color: #000;
+            font-family: Arial, Helvetica Neue, Helvetica, sans-serif
+        }
+
+        a {
+            color: #0068a5
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body,
+        h1,
+        p {
+            margin: 0
+        }
+
+        .bee-row-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex
+        }
+
+        .bee-row-content .bee-col-w3 {
+            flex-basis: 25%
+        }
+
+        .bee-row-content .bee-col-w4 {
+            flex-basis: 33%
+        }
+
+        .bee-row-content .bee-col-w6 {
+            flex-basis: 50%
+        }
+
+        .bee-row-content .bee-col-w12 {
+            flex-basis: 100%
+        }
+
+        .bee-button a,
+        .bee-icon .bee-icon-label-right a {
+            text-decoration: none
+        }
+
+        .bee-divider,
+        .bee-image {
+            overflow: auto
+        }
+
+        .bee-divider .center,
+        .bee-image .bee-center {
+            margin: 0 auto
+        }
+
+        .bee-image .bee-right {
+            float: right
+        }
+
+        .bee-row-3 .bee-col-2 .bee-block-1 {
+            width: 100%
+        }
+
+        .bee-icon {
+            display: inline-block;
+            vertical-align: middle
+        }
+
+        .bee-icon .bee-content {
+            display: flex;
+            align-items: center
+        }
+
+        .bee-image img {
+            display: block;
+            width: 100%
+        }
+
+        .bee-social .icon img {
+            max-height: 32px
+        }
+
+        .bee-text {
+            overflow-wrap: anywhere
+        }
+
+        @media (max-width:768px) {
+            .bee-mobile_hide {
+                display: none
+            }
+
+            .bee-row-content:not(.no_stack) {
+                display: block
+            }
+        }
+
+        .bee-row-1,
+        .bee-row-10,
+        .bee-row-11,
+        .bee-row-12,
+        .bee-row-14,
+        .bee-row-15,
+        .bee-row-16,
+        .bee-row-17,
+        .bee-row-2,
+        .bee-row-6,
+        .bee-row-7,
+        .bee-row-9 {
+            background-repeat: no-repeat
+        }
+
+        .bee-row-1 .bee-row-content,
+        .bee-row-10 .bee-row-content,
+        .bee-row-11 .bee-row-content,
+        .bee-row-12 .bee-row-content,
+        .bee-row-14 .bee-row-content,
+        .bee-row-15 .bee-row-content,
+        .bee-row-16 .bee-row-content,
+        .bee-row-2 .bee-row-content,
+        .bee-row-6 .bee-row-content,
+        .bee-row-7 .bee-row-content,
+        .bee-row-9 .bee-row-content {
+            background-color: #fff;
+            background-repeat: no-repeat;
+            color: #000
+        }
+
+        .bee-row-1 .bee-col-1 .bee-block-1,
+        .bee-row-11 .bee-col-1 .bee-block-1,
+        .bee-row-11 .bee-col-1 .bee-block-3,
+        .bee-row-12 .bee-col-1 .bee-block-1,
+        .bee-row-12 .bee-col-1 .bee-block-2,
+        .bee-row-14 .bee-col-1 .bee-block-1,
+        .bee-row-16 .bee-col-1 .bee-block-1,
+        .bee-row-2 .bee-col-1 .bee-block-2,
+        .bee-row-2 .bee-col-1 .bee-block-3,
+        .bee-row-4 .bee-col-1 .bee-block-1,
+        .bee-row-5 .bee-col-1 .bee-block-1,
+        .bee-row-6 .bee-col-1 .bee-block-1,
+        .bee-row-6 .bee-col-1 .bee-block-2,
+        .bee-row-6 .bee-col-1 .bee-block-3,
+        .bee-row-6 .bee-col-2 .bee-block-1,
+        .bee-row-7 .bee-col-1 .bee-block-1,
+        .bee-row-7 .bee-col-1 .bee-block-5,
+        .bee-row-8 .bee-col-1 .bee-block-1,
+        .bee-row-8 .bee-col-1 .bee-block-2,
+        .bee-row-8 .bee-col-1 .bee-block-3,
+        .bee-row-8 .bee-col-2 .bee-block-1,
+        .bee-row-9 .bee-col-1 .bee-block-1,
+        .bee-row-9 .bee-col-1 .bee-block-3 {
+            padding: 10px
+        }
+
+        .bee-row-15 .bee-col-1 .bee-block-1,
+        .bee-row-2 .bee-col-1 .bee-block-1 {
+            text-align: center;
+            width: 100%
+        }
+
+        .bee-row-3 {
+            background-repeat: no-repeat
+        }
+
+        .bee-row-13 .bee-row-content,
+        .bee-row-17 .bee-row-content,
+        .bee-row-3 .bee-row-content,
+        .bee-row-4 .bee-row-content,
+        .bee-row-5 .bee-row-content,
+        .bee-row-8 .bee-row-content {
+            background-repeat: no-repeat;
+            color: #000
+        }
+
+        .bee-row-3 .bee-col-1 {
+            padding-bottom: 5px
+        }
+
+        .bee-row-11 .bee-col-1 .bee-block-2,
+        .bee-row-3 .bee-col-1 .bee-block-1,
+        .bee-row-7 .bee-col-1 .bee-block-2,
+        .bee-row-8 .bee-col-1 .bee-block-5 {
+            padding: 10px 25px
+        }
+
+        .bee-row-3 .bee-col-1 .bee-block-2,
+        .bee-row-6 .bee-col-1 .bee-block-5 {
+            padding: 10px 25px 20px
+        }
+
+        .bee-row-3 .bee-col-1 .bee-block-3,
+        .bee-row-6 .bee-col-1 .bee-block-6 {
+            padding: 10px 25px;
+            text-align: left
+        }
+
+        .bee-row-13,
+        .bee-row-4,
+        .bee-row-5,
+        .bee-row-8 {
+            background-color: #fafafa;
+            background-repeat: no-repeat
+        }
+
+        .bee-row-4 .bee-col-1,
+        .bee-row-5 .bee-col-1 {
+            padding: 5px 25px
+        }
+
+        .bee-row-6 .bee-col-1,
+        .bee-row-8 .bee-col-1 {
+            padding-top: 5px
+        }
+
+        .bee-row-6 .bee-col-1 .bee-block-4,
+        .bee-row-8 .bee-col-1 .bee-block-4 {
+            padding: 15px 25px 10px
+        }
+
+        .bee-row-11 .bee-col-1,
+        .bee-row-12 .bee-col-1,
+        .bee-row-13 .bee-col-1,
+        .bee-row-13 .bee-col-2,
+        .bee-row-13 .bee-col-3,
+        .bee-row-14 .bee-col-1,
+        .bee-row-15 .bee-col-1,
+        .bee-row-15 .bee-col-2,
+        .bee-row-15 .bee-col-3,
+        .bee-row-16 .bee-col-1,
+        .bee-row-17 .bee-col-1,
+        .bee-row-6 .bee-col-2,
+        .bee-row-7 .bee-col-1,
+        .bee-row-8 .bee-col-2,
+        .bee-row-9 .bee-col-1 {
+            padding-bottom: 5px;
+            padding-top: 5px
+        }
+
+        .bee-row-6 .bee-col-2 .bee-block-2,
+        .bee-row-8 .bee-col-2 .bee-block-2 {
+            padding-right: 20px;
+            width: 100%
+        }
+
+        .bee-row-7 .bee-col-1 .bee-block-3 {
+            padding: 10px 25px 20px 50px
+        }
+
+        .bee-row-7 .bee-col-1 .bee-block-4 {
+            padding: 10px 25px;
+            text-align: center
+        }
+
+        .bee-row-7 .bee-col-1 .bee-block-6 {
+            padding-left: 50px;
+            padding-right: 30px;
+            width: 100%
+        }
+
+        .bee-row-9 .bee-col-1 .bee-block-2 {
+            padding: 10px 30px
+        }
+
+        .bee-row-10 .bee-col-1 {
+            border-bottom: 2px solid #e9e9f0;
+            border-left: 2px solid #e9e9f0;
+            border-right: 2px solid #e9e9f0;
+            border-top: 2px solid #e9e9f0;
+            padding: 5px 5px 25px
+        }
+
+        .bee-row-10 .bee-col-1 .bee-block-1,
+        .bee-row-10 .bee-col-2 .bee-block-1,
+        .bee-row-10 .bee-col-3 .bee-block-1 {
+            padding: 30px 10px 10px
+        }
+
+        .bee-row-10 .bee-col-1 .bee-block-2,
+        .bee-row-10 .bee-col-1 .bee-block-3,
+        .bee-row-10 .bee-col-2 .bee-block-2,
+        .bee-row-10 .bee-col-2 .bee-block-3,
+        .bee-row-10 .bee-col-3 .bee-block-2 {
+            padding: 10px 20px 30px
+        }
+
+        .bee-row-10 .bee-col-1 .bee-block-4,
+        .bee-row-10 .bee-col-2 .bee-block-4 {
+            padding: 30px 10px 5px
+        }
+
+        .bee-row-10 .bee-col-1 .bee-block-5,
+        .bee-row-10 .bee-col-2 .bee-block-5,
+        .bee-row-10 .bee-col-3 .bee-block-5 {
+            padding: 5px 20px 30px
+        }
+
+        .bee-row-10 .bee-col-1 .bee-block-6,
+        .bee-row-10 .bee-col-2 .bee-block-6,
+        .bee-row-10 .bee-col-3 .bee-block-6 {
+            padding: 10px;
+            text-align: center
+        }
+
+        .bee-row-10 .bee-col-2 {
+            border-bottom: 4px solid #7273f1;
+            border-left: 4px solid #7273f1;
+            border-right: 4px solid #7273f1;
+            border-top: 4px solid #7273f1;
+            padding: 5px 10px 25px 5px
+        }
+
+        .bee-row-10 .bee-col-3 {
+            border-bottom: 2px solid #e9e9f0;
+            border-left: 2px solid #e9e9f0;
+            border-right: 2px solid #e9e9f0;
+            border-top: 2px solid #e9e9f0;
+            padding-bottom: 25px;
+            padding-top: 5px
+        }
+
+        .bee-row-10 .bee-col-3 .bee-block-3 {
+            padding: 10px 20px 20px
+        }
+
+        .bee-row-10 .bee-col-3 .bee-block-4 {
+            padding: 40px 10px 5px
+        }
+
+        .bee-row-11 .bee-col-1 .bee-block-4 {
+            padding-bottom: 10px;
+            padding-left: 50px;
+            padding-right: 30px;
+            width: 100%
+        }
+
+        .bee-row-13 .bee-col-1 .bee-block-1,
+        .bee-row-13 .bee-col-2 .bee-block-1,
+        .bee-row-13 .bee-col-3 .bee-block-2 {
+            padding: 10px;
+            width: 100%
+        }
+
+        .bee-row-13 .bee-col-1 .bee-block-2,
+        .bee-row-13 .bee-col-3 .bee-block-1 {
+            padding: 5px
+        }
+
+        .bee-row-15 .bee-col-2 .bee-block-1,
+        .bee-row-15 .bee-col-2 .bee-block-2,
+        .bee-row-15 .bee-col-3 .bee-block-1 {
+            padding: 10px 10px 10px 20px
+        }
+
+        .bee-row-15 .bee-col-3 .bee-block-2 {
+            padding: 10px 10px 10px 20px;
+            text-align: left
+        }
+
+        .bee-row-17 .bee-col-1 .bee-block-1 {
+            color: #9d9d9d;
+            font-family: inherit;
+            font-size: 15px;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            text-align: center
+        }
+
+        .bee-row-17 .bee-col-1 .bee-block-1 .bee-icon-image {
+            padding: 5px 6px 5px 5px
+        }
+
+        .bee-row-17 .bee-col-1 .bee-block-1 .bee-icon:not(.bee-icon-first) .bee-content {
+            margin-left: 0
+        }
+
+        .bee-row-17 .bee-col-1 .bee-block-1 .bee-icon::not(.bee-icon-last) .bee-content {
+            margin-right: 0
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bee-page-container">
+        <div class="bee-row bee-row-1">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:0px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-2">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-heading">
+                        <h1
+                            style="color:#33485b;direction:ltr;font-family:Tahoma, Verdana, Segoe, sans-serif;font-size:51px;font-weight:700;letter-spacing:2px;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;">
+                            <span class="tinyMce-placeholder">VASUDEVA</span>
+                        </h1>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-divider">
+                        <div class="center bee-separator" style="border-top:1px dotted #BBBBBB;width:100%;"></div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-divider">
+                        <div class="spacer" style="height:0px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-3">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w6">
+                    <div class="bee-block bee-block-1 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 14px; line-height: 16px;"><span
+                                    style="font-size: 46px; line-height: 55px;"><strong style="">All new Vasudeva-API
+                                        has arrived!</strong></span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 180%; font-size: 12px; font-family: inherit; color: #a0a0a0;">
+                            <p style="font-size: 14px; line-height: 25px; text-align: left;"><span
+                                    style="font-size: 20px; line-height: 36px;">Use it in your web APP, Mobile APK,
+                                    Desktop Software or any place you could think of using it.</span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-button"><a class="bee-button-content" href="www.example.com"
+                            style="font-size: 15px; background-color: #7273f1; border-bottom: 0px solid transparent; border-left: 0px solid transparent; border-radius: 40px; border-right: 0px solid transparent; border-top: 0px solid transparent; color: #ffffff; direction: ltr; font-family: inherit; max-width: 100%; padding-bottom: 5px; padding-left: 25px; padding-right: 25px; padding-top: 5px; width: auto; display: inline-block;"
+                            target="_self"><span dir="ltr"
+                                style="word-break: break-word; font-size: 15px; line-height: 200%;"><span dir="ltr"
+                                    style="font-size: 15px;">Get Started</span></span></a></div>
+                </div>
+                <div class="bee-col bee-col-2 bee-col-w6">
+                    <div class="bee-block bee-block-1 bee-image"><img alt="Main Image of app"
+                            class="bee-right bee-fixedwidth bee-fullwidthOnMobile"
+                            src="https://d1oco4z2z1fhwp.cloudfront.net/templates/default/2441/Hero_image_app.png"
+                            style="max-width:720px;" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-4">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-5">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-6">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w6">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:15px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-divider bee-mobile_hide">
+                        <div class="spacer" style="height:15px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-divider bee-mobile_hide">
+                        <div class="spacer" style="height:15px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-4 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 14px; line-height: 16px;"><span
+                                    style="font-size: 30px; line-height: 36px;"><strong style="">User Tracking and
+                                        Management</strong></span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-5 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #a0a0a0;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: left;"><span
+                                    style="font-size: 22px; line-height: 33px;">Manage your users from a request only.
+                                    User management never been so easy. Just a request to our API server and kaboom your
+                                    users can be CRUD.</span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-6 bee-button"><a class="bee-button-content" href="www.example.com"
+                            style="font-size: 15px; background-color: #7273f1; border-bottom: 0px solid transparent; border-left: 0px solid transparent; border-radius: 40px; border-right: 0px solid transparent; border-top: 0px solid transparent; color: #ffffff; direction: ltr; font-family: inherit; font-weight: 400; max-width: 100%; padding-bottom: 5px; padding-left: 25px; padding-right: 25px; padding-top: 5px; width: auto; display: inline-block;"
+                            target="_self"><span dir="ltr"
+                                style="word-break: break-word; font-size: 15px; line-height: 200%;"><span dir="ltr"
+                                    style="font-size: 15px;">Learn More</span></span></a></div>
+                </div>
+                <div class="bee-col bee-col-2 bee-col-w6">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:15px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-image"><img alt="Following  a user "
+                            class="bee-center bee-fixedwidth bee-fullwidthOnMobile"
+                            src="https://d1oco4z2z1fhwp.cloudfront.net/templates/default/2441/Right_Image_1.png"
+                            style="max-width:432px;" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-7">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:20px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 14px; line-height: 16px; text-align: center;"><span
+                                    style="font-size: 30px; line-height: 36px;"><strong style="">Keep your budget under
+                                        control</strong></span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-family: inherit; font-size: 12px; color: #a0a0a0;">
+                            <p style="line-height: 18px; text-align: center;"><span
+                                    style="font-size: 22px; line-height: 33px;">Buy requests that you need, no more
+                                    expenses on hiring a developer for managing your database and all the users</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-4 bee-button"><a class="bee-button-content" href="www.example.com"
+                            style="font-size: 15px; background-color: #7273f1; border-bottom: 0px solid transparent; border-left: 0px solid transparent; border-radius: 40px; border-right: 0px solid transparent; border-top: 0px solid transparent; color: #ffffff; direction: ltr; font-family: inherit; max-width: 100%; padding-bottom: 5px; padding-left: 25px; padding-right: 25px; padding-top: 5px; width: auto; display: inline-block;"
+                            target="_self"><span dir="ltr"
+                                style="word-break: break-word; font-size: 15px; line-height: 200%;"><span dir="ltr"
+                                    style="font-size: 15px;">Learn More</span></span></a></div>
+                    <div class="bee-block bee-block-5 bee-divider">
+                        <div class="spacer" style="height:20px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-6 bee-image"><img alt="Sending Gift by phone"
+                            class="bee-center bee-fixedwidth"
+                            src="https://d1oco4z2z1fhwp.cloudfront.net/templates/default/2441/middle_image_3.png"
+                            style="max-width:504px;" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-8">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w6">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:15px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-divider bee-mobile_hide">
+                        <div class="spacer" style="height:15px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-divider bee-mobile_hide">
+                        <div class="spacer" style="height:35px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-4 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 14px; line-height: 16px;"><span
+                                    style="font-size: 30px; line-height: 36px;"><strong style="">Enhance your Project by
+                                        Adding Email Facility</strong></span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-5 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #a0a0a0;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: left;"><span
+                                    style="font-size: 22px; line-height: 33px;">Send Mail using our API anonymously w/o
+                                    exposing your email ID.</span></p>
+                            <p style="font-size: 14px; line-height: 21px; text-align: left;"><span
+                                    style="font-size: 22px; line-height: 33px;">Quotas got you covered for this as
+                                    well.</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bee-col bee-col-2 bee-col-w6">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:15px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-image"><img alt="App showing the feature"
+                            class="bee-center bee-fixedwidth"
+                            src="https://d1oco4z2z1fhwp.cloudfront.net/templates/default/2441/Right_Image_4.png"
+                            style="max-width:432px;" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-9">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:20px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;"><span
+                                    style="font-size: 20px; line-height: 30px;"><span
+                                        style="font-size: 24px; line-height: 36px;">🎉 </span>SignUp Today And Receive
+                                </span></p>
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;"><span
+                                    style="font-size: 20px; line-height: 30px;"><strong style="">300 requests and 10
+                                        Mails FREE! </strong></span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-divider">
+                        <div class="spacer" style="height:20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-10">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w4">
+                    <div class="bee-block bee-block-1 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #232f3d;">
+                            <p style="font-size: 16px; line-height: 19px; text-align: center;"><span
+                                    style="font-size: 20px; line-height: 24px;"><strong style="">Basic</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #848484;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;"><strong style=""><span
+                                        style="font-size: 16px; line-height: 24px;">200k Requests + 200
+                                        Emails</span></strong></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #848484;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;">Basic and for small scale
+                                applications</p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-4 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #232f3d;">
+                            <p style="line-height: 14px; text-align: center;"><span
+                                    style="font-size: 24px; line-height: 28px;"><strong style="">INR 499</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-5 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #848484;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;"><span
+                                    style="font-size: 12px; line-height: 18px;">200k Hits/recharge </span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-6 bee-button"><a class="bee-button-content" href="www.example.com"
+                            style="font-size: 16px; background-color: transparent; border-bottom: 1px solid #7273F1; border-left: 1px solid #7273F1; border-radius: 40px; border-right: 1px solid #7273F1; border-top: 1px solid #7273F1; color: #7273f1; direction: ltr; font-family: inherit; max-width: 100%; padding-bottom: 5px; padding-left: 20px; padding-right: 20px; padding-top: 5px; width: auto; display: inline-block;"
+                            target="_self"><span dir="ltr"
+                                style="word-break: break-word; font-size: 16px; line-height: 200%;">Get
+                                Started</span></a></div>
+                </div>
+                <div class="bee-col bee-col-2 bee-col-w4">
+                    <div class="bee-block bee-block-1 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #232f3d;">
+                            <p style="font-size: 16px; line-height: 19px; text-align: center;"><span
+                                    style="font-size: 20px; line-height: 24px;"><strong style="">Student</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #848484;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;"><strong style=""><span
+                                        style="font-size: 16px; line-height: 24px;">500k requests + 1,000
+                                        Emails</span></strong></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #848484;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;">Package Especially
+                                designed for students benefit.</p>
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;">University Listed below
+                                gets additional 10 emails</p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-4 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #232f3d;">
+                            <p style="font-size: 16px; line-height: 19px; text-align: center;"><span
+                                    style="font-size: 24px; line-height: 28px;"><strong style="">INR 199</strong></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-5 bee-text">
+                        <div class="bee-text-content"
+                            style="font-size: 12px; line-height: 150%; font-family: inherit; color: #848484;">
+                            <p style="font-size: 12px; text-align: center; line-height: 18px;">500k Hits/Recharge</p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-6 bee-button"><a class="bee-button-content"
+                            href="{% url 'client_signup'%}"
+                            style="font-size: 16px; background-color: #7273f1; border-bottom: 0px solid transparent; border-left: 0px solid transparent; border-radius: 29px; border-right: 0px solid transparent; border-top: 0px solid transparent; color: #ffffff; direction: ltr; font-family: inherit; font-weight: 400; max-width: 100%; padding-bottom: 5px; padding-left: 20px; padding-right: 20px; padding-top: 5px; width: auto; display: inline-block;"
+                            target="_self"><span dir="ltr"
+                                style="margin: 0; word-break: break-word; font-size: 16px; line-height: 200%;">Get
+                                Started</span></a></div>
+                </div>
+                <div class="bee-col bee-col-3 bee-col-w4">
+                    <div class="bee-block bee-block-1 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #232f3d;">
+                            <p style="font-size: 16px; line-height: 19px; text-align: center;"><span
+                                    style="font-size: 20px; line-height: 24px;"><strong
+                                        style="">Enterprise</strong></span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 150%; font-size: 12px; font-family: inherit; color: #848484;">
+                            <p style="font-size: 14px; line-height: 21px; text-align: center;"><strong style=""><span
+                                        style="font-size: 16px; line-height: 24px;">Unlimited</span></strong></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-text">
+                        <div class="bee-text-content"
+                            style="font-size: 12px; line-height: 150%; font-family: inherit; color: #848484;">
+                            <p style="font-size: 12px; text-align: center; line-height: 18px;">Unlimited benefit of our
+                                API for your company today.</p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-4 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #232f3d;">
+                            <p style="font-size: 16px; line-height: 19px; text-align: center;"><span
+                                    style="font-size: 24px; line-height: 28px;"><strong style="">Get a
+                                        Quotation.</strong></span></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-5 bee-text">
+                        <div class="bee-text-content"
+                            style="font-size: 12px; line-height: 150%; font-family: inherit; color: #848484;">
+                            <p style="font-size: 12px; line-height: 18px;"> </p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-6 bee-button"><a class="bee-button-content" href="www.example.com"
+                            style="font-size: 16px; background-color: transparent; border-bottom: 1px solid #7273F1; border-left: 1px solid #7273F1; border-radius: 40px; border-right: 1px solid #7273F1; border-top: 1px solid #7273F1; color: #7273f1; direction: ltr; font-family: inherit; max-width: 100%; padding-bottom: 5px; padding-left: 20px; padding-right: 20px; padding-top: 5px; width: auto; display: inline-block;"
+                            target="_self"><span dir="ltr"
+                                style="word-break: break-word; font-size: 16px; line-height: 200%;">Get
+                                Started</span></a></div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-11">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:20px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 14px; line-height: 16px; text-align: center;"><strong
+                                    style="font-size: 20px;">Students From Listed University gets Additional
+                                </strong><span style="font-size: 20px; line-height: 24px;"><strong
+                                        style="">Benefits</strong></span><strong style="font-size: 20px;"> and
+                                    discounts.</strong></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-3 bee-divider">
+                        <div class="spacer" style="height:10px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-4 bee-image"><img alt="Meeting " class="bee-center bee-fixedwidth"
+                            src="https://d1oco4z2z1fhwp.cloudfront.net/templates/default/2441/Working_with_team.png"
+                            style="max-width:360px;" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-12">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:5px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-divider">
+                        <div class="center bee-separator" style="border-top:1px solid #DEE8FB;width:100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-13">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w4">
+                    <div class="bee-block bee-block-1 bee-image"><img alt="Alternate text"
+                            class="bee-center bee-fixedwidth" src="https://www.ppsu.ac.in/img/loader-logo.png"
+                            style="max-width:96px;" /></div>
+                    <div class="bee-block bee-block-2 bee-divider bee-mobile_hide">
+                        <div class="spacer" style="height:0px;"></div>
+                    </div>
+                </div>
+                <div class="bee-col bee-col-2 bee-col-w4">
+                    <div class="bee-block bee-block-1 bee-image"><img alt="Alternate text"
+                            class="bee-center bee-autowidth" src="https://paruluniversity.ac.in/pu-web/images/logo.png"
+                            style="max-width:460px;" /></div>
+                </div>
+                <div class="bee-col bee-col-3 bee-col-w4">
+                    <div class="bee-block bee-block-1 bee-divider bee-mobile_hide">
+                        <div class="spacer" style="height:0px;"></div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-image"><img alt="Alternate text"
+                            class="bee-center bee-fixedwidth" src="https://rku.ac.in/images/logo.png"
+                            style="max-width:144px;" /></div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-14">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-15">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w6">
+                    <div class="bee-block bee-block-1 bee-heading">
+                        <h1
+                            style="color:#111111;direction:ltr;font-family:'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace;font-size:51px;font-weight:700;letter-spacing:normal;line-height:120%;text-align:center;margin-top:0;margin-bottom:0;">
+                            <span class="tinyMce-placeholder">VASUDEVA</span>
+                        </h1>
+                    </div>
+                </div>
+                <div class="bee-col bee-col-2 bee-col-w3">
+                    <div class="bee-block bee-block-1 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 16px; line-height: 19px; text-align: left;"><strong style="">Contact
+                                    Info</strong></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-text">
+                        <div class="bee-text-content"
+                            style="font-size: 12px; line-height: 180%; font-family: inherit; color: #656565;">
+                            <p style="font-size: 12px; line-height: 21px;">devflix.mail.me@gmail.com</p>
+                            <p style="font-size: 12px; line-height: 21px;">Mr. Nivid Koradiya - +91 6353348928
+                                (DEVELOPER)</p>
+                            <p style="font-size: 12px; line-height: 21px;"> </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bee-col bee-col-3 bee-col-w3">
+                    <div class="bee-block bee-block-1 bee-text">
+                        <div class="bee-text-content"
+                            style="line-height: 120%; font-size: 12px; font-family: inherit; color: #34495e;">
+                            <p style="font-size: 16px; line-height: 19px; text-align: left;"><strong style="">Follow
+                                    Us</strong></p>
+                        </div>
+                    </div>
+                    <div class="bee-block bee-block-2 bee-social">
+                        <div class="content"><span class="icon" style="padding:0 2.5px 0 2.5px;"><span class="icon"
+                                    style="padding:0 2.5px 0 2.5px;"><a
+                                        href="https://www.linkedin.com/in/nivid-koradiya/" target="_self"><img
+                                            alt="LinkedIn"
+                                            src="https://app-rsrc.getbee.io/public/resources/social-networks-icon-sets/t-only-logo-dark-gray/linkedin@2x.png"
+                                            title="LinkedIn" /></a></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bee-row bee-row-16">
+            <div class="bee-row-content">
+                <div class="bee-col bee-col-1 bee-col-w12">
+                    <div class="bee-block bee-block-1 bee-divider">
+                        <div class="spacer" style="height:5px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

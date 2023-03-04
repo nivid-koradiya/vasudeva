@@ -17,10 +17,17 @@ from .views import (
     ajax_clientadmin_new,
     ajax_new_client_signup,
     
+    
+    #test_views
+    test_view_1,
+    
+    #index views
+    index_view,
 
     )
 urlpatterns = [
-    
+    #index page
+    path('',index_view,name='index_view'),
     #dashboard urls
     path("dashboard/admin/",admin_dashbaord,name='admin_dashboard'),
     path("dashboard/admin/client/all",admin_all_client,name='client_all'),
@@ -42,6 +49,10 @@ urlpatterns = [
     path("auth/client-signup/",client_signup,name='client_signup'),
     path("auth/client-login/",client_login,name='client_login'),
     path("auth/logout/",logout_view, name="logout"),
+    
+    
+    #test_views
+    path("test/1/",test_view_1, name="test_view_1"),
     
 
     

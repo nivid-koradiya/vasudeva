@@ -218,7 +218,7 @@ def client_signup(request):
     form = AjaxClientSignup()
     msg_context={
         'form' : form,
-        # "qr" : str(request.headers['Cookie']).split('=')[-1],
+        "qr" : str(request.headers['Cookie']).split('=')[-1],
     }
     return render(request,'main/client-signup.html',msg_context)
 
@@ -227,6 +227,10 @@ def client_signup(request):
 def client_login(request):
     return render(request=request,template_name='main/client-login.html')
 
+
+
+def index_view(request):
+    return render(request=request,template_name='main/index.html')
 
 
 
@@ -408,3 +412,11 @@ def ajax_new_client_signup(request):
         'status' : False,
     })
     
+
+
+
+
+#test views 
+
+def test_view_1(request):
+    return render(request=request,template_name='main/test.html')
