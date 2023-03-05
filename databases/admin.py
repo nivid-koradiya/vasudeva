@@ -9,7 +9,7 @@ from .models import (
     SurfaceUser,
     SurfaceUserAuthLog,
     ApiKeys,
-    
+    ClientVerificationToken
 )
 
 class LoginLogAdmin(admin.ModelAdmin):
@@ -61,3 +61,9 @@ class ApiKeysAdmin(admin.ModelAdmin):
     ]
 admin.site.register(ApiKeys,ApiKeysAdmin)
 
+
+class ClientVerificationTokenAdmin(admin.ModelAdmin):
+    readonly_fields = [
+        
+    ]
+admin.site.register(ClientVerificationToken,ClientVerificationTokenAdmin)
