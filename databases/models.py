@@ -150,3 +150,14 @@ class ApiKeys(models.Model):
     key_value = models.CharField(max_length=64,default=generate_api_key)
     client = models.ForeignKey(Client,on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+    
+def generate_verification_token():
+    return str(uuid.uuid4().hex)
+class client_verification_token(models.Model):
+    id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    token = models.CharField(max_length=100,default=generate_verification_token,unique=True)
+    timestamp = models.DateTimeField(auto_now_add=True,null=False)
+    client = models.ForeignKey(Client,on_delete=models.CASCADE)
+    
+    
