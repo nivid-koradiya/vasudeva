@@ -160,4 +160,8 @@ class ClientVerificationToken(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True,null=False)
     client = models.ForeignKey(Client,on_delete=models.CASCADE)
     
+class RequestLog(models.Model):
+    id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    ip_address = models.CharField(max_length=32,null=False)
+    timestamp  = models.DateTimeField(auto_now_add=True,null=False,editable=False)
     
