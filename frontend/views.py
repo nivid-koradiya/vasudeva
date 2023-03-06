@@ -8,9 +8,12 @@ from scripts.admin_user.user_details import get_username_from_request
 from scripts.logging.login_logout_logs import admin_login_log, admin_logout_log
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
-from .forms import (AdminLoginForm,AjaxNewClient,AjaxNewClientAdmin, AjaxClientSignup
+from .forms import (AdminLoginForm,AjaxNewClient,AjaxNewClientAdmin, AjaxClientSignup, ClientLoginForm
                     )
-
+from scripts.spark_mail import verification_mail as vfm
+import environ
+from scripts.network.ipadress import get_ip
+from .decorators import log_ip_address
 
 def admin_login(request):
     if request.user.is_authenticated:
@@ -139,7 +142,7 @@ def admin_all_client(request):
         msg_context= {
                     'msg_color' : 'warning',
                     'msg_title' : "Not Authorized!",
-                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_body' : "You lack the permissions to access this portion of admin sections, Try logging in as ad Admin!",
                     'msg_btn_link' : '/auth/admin-login/' ,
                     'msg_btn_text' : 'Admin Login' 
                 }
@@ -162,7 +165,7 @@ def admin_delete_client(request):
         msg_context= {
                     'msg_color' : 'warning',
                     'msg_title' : "Not Authorized!",
-                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_body' : "You lack the permissions to access this portion of admin sections, Try logging in as ad Admin!",
                     'msg_btn_link' : '/auth/admin-login/' ,
                     'msg_btn_text' : 'Admin Login' 
                 }
@@ -184,7 +187,7 @@ def admin_client_admin_all(request):
         msg_context= {
                     'msg_color' : 'warning',
                     'msg_title' : "Not Authorized!",
-                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_body' : "You lack the permissions to access this portion of admin sections, Try logging in as ad Admin!",
                     'msg_btn_link' : '/auth/admin-login/' ,
                     'msg_btn_text' : 'Admin Login' 
                 }
@@ -207,7 +210,7 @@ def admin_client_admin_manage(request):
         msg_context= {
                     'msg_color' : 'warning',
                     'msg_title' : "Not Authorized!",
-                    'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
+                    'msg_body' : "You lack the permissions to access this portion of admin sections, Try logging in as ad Admin!",
                     'msg_btn_link' : '/auth/admin-login/' ,
                     'msg_btn_text' : 'Admin Login' 
                 }
@@ -225,12 +228,26 @@ def client_signup(request):
 
 
 def client_login(request):
-    return render(request=request,template_name='main/client-login.html')
+    if request.user.is_authenticated:
+        msg_context= {
+                    'msg_color' : 'secondary',
+                    'msg_title' : ("Welcome, "+ get_username_from_request(request)) ,
+                    'msg_body' : "You are already loggedin, press the button below to Recharge Account",
+                    'msg_btn_link' : '/payments/' ,
+                    'msg_btn_text' : 'Procced to Dashbaord' 
+                }
+        return render(request,'main/messages.html',msg_context)
+    context={}
+    form = ClientLoginForm()
+    context['form'] = form
+    return render(request=request,template_name='main/client-login.html',context=context)
 
 
-
+@log_ip_address
 def index_view(request):
     return render(request=request,template_name='main/index.html')
+
+
 
 
 
@@ -419,4 +436,20 @@ def ajax_new_client_signup(request):
 #test views 
 
 def test_view_1(request):
-    return render(request=request,template_name='main/test.html')
+    
+    # subject = "Email Subject"
+    # recipients = ['nividkoradiya@gmail.com']
+    # data = {
+    #     'id' : request.GET.get('id'),
+    #     'url' : request.GET.get('url'),
+    # }
+    # vfm.send_email(subject, recipients,data)
+    # return HttpResponse("SENT")
+    msg_context= {
+        'msg_color' : 'success',
+        'msg_title' : "Client Account Verification Successful!",
+        'msg_body' : "You have successfully verified as a client, Make sure you use API wisely!",
+        'msg_btn_link' : '/payments/' ,
+        'msg_btn_text' : 'Procced to Payment' 
+        }
+    return render(request,'main/messages.html',msg_context)

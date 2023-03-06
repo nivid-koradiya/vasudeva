@@ -26,6 +26,10 @@ class AjaxClientSignup(forms.Form):
     captcha = CaptchaField(label='')
     tnc = forms.CharField()
 
+class ClientLoginForm(forms.Form):
+    username = forms.CharField(max_length=64)
+    password = forms.CharField(max_length=32)
+    captcha = CaptchaField(label='')
 
 class AjaxNewClient(forms.Form):
     company  = forms.CharField(max_length=100, required=True)
