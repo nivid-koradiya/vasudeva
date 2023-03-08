@@ -10,6 +10,9 @@ def log_ip_address(function):
                 ip = request.META.get('REMOTE_ADDR')
             log = RL()
             log.ip_address = ip
+            log.path = request.get_full_path()
+            log.method = request.method
+            log.user = request.user
             log.save()
             return function(request, *args, **kwargs)
         else:

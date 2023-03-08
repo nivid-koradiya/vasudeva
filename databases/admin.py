@@ -72,6 +72,6 @@ admin.site.register(ClientVerificationToken,ClientVerificationTokenAdmin)
 
 class RequestLogAdmin(admin.ModelAdmin):
     readonly_fields = [
-        
+        'timestamp'
     ]
 admin.site.register(RequestLog,RequestLogAdmin)

@@ -166,8 +166,12 @@ class RequestLog(models.Model):
     path = models.CharField(max_length=1000,null=False)
     timestamp  = models.DateTimeField(auto_now_add=True,null=False,editable=False)
     method = models.CharField(null=False,max_length=8)
-    
+    user = models.CharField(null=False,max_length=100)
+
     class Meta:
         verbose_name = ("Request Log")
         verbose_name_plural = ("Request Logs")
         db_table = 'request_log'
+        
+    def __str__(self):
+        return str(self.timestamp.tzinfo)
