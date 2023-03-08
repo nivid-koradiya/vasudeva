@@ -5,10 +5,19 @@ from django.core import serializers
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import redirect, render
 from scripts.admin_user.user_details import get_username_from_request
-from scripts.logging.login_logout_logs import admin_login_log, admin_logout_log
+from scripts.logging.login_logout_logs import (
+    admin_login_log,
+    admin_logout_log,
+    client_login_log,
+    client_logout_log,
+    )
 from rest_framework.decorators import api_view
 from django.contrib.auth.models import User
-from .forms import (AdminLoginForm,AjaxNewClient,AjaxNewClientAdmin, AjaxClientSignup, ClientLoginForm
+from .forms import (AdminLoginForm,
+                    AjaxNewClient,
+                    AjaxNewClientAdmin,
+                    AjaxClientSignup,
+                    ClientLoginForm
                     )
 from scripts.spark_mail import verification_mail as vfm
 import environ
@@ -125,6 +134,25 @@ def logout_view(request):
     return render(request,'main/messages.html',msg_context) # returning the logout message page.
 
 
+def client_logout_view(request):
+    if str(request.user).lower() =="anonymoususer": #check if the non login user is trying to login.
+        return redirect('/auth/admin-login/')
+    
+
+    user = get_username_from_request(request) # storing the username for messaging purpose.
+    client_logout_log(request) # log the logout record.
+    logout(request)
+
+    msg_context= {
+        'msg_color' : 'warning',
+        'msg_title' : "See you soon, " + user,
+        'msg_body' : f"You have succesfully logged out!, have a good day!,{user}",
+        'msg_btn_link' : '/auth/client-login/',
+        'msg_btn_text' : 'Client Login',
+    }
+    return render(request,'main/messages.html',msg_context) # returning the logout message page.
+
+
 
 
 #ADMIN  CLIENTS - ALL
@@ -237,6 +265,75 @@ def client_login(request):
                     'msg_btn_text' : 'Procced to Dashbaord' 
                 }
         return render(request,'main/messages.html',msg_context)
+    if request.method == "POST":
+        # print("POST REQ")
+        form = ClientLoginForm(request.POST)
+
+        if form.is_valid(): # if form is valid the  move towards the authentication of recieved credentials
+            # extracting the credentials from post request
+            username = request.POST.get("username").lower()
+            password = request.POST.get("password") 
+            # authenticating the user and pass to get a user form user model
+            user = authenticate(username=username,password=password)
+            # checking if any such user is present in our User table
+            if user is not None:
+                if user is not None:
+                    try:
+                        user_client = ClientAdmin.objects.get(username=username)
+                    except:
+                        msg_context= {
+                            'msg_color' : 'danger',
+                            'msg_title' : "Login Authority is mismatched!",
+                            'msg_body' : "You have entered the credentials for CLIENT mismatched with another staff user of VASUDEVA, make sure you are entering right password on this portal!",
+                            'msg_btn_link' : '/auth/client-login' ,
+                            'msg_btn_text' : 'Retry Login' 
+                        }
+                        return render(request,'main/messages.html',msg_context)
+                    
+                    login(request,user) #login the user to  session
+                    client_login_log(request) # log the login record
+                    # print(user)
+                else:
+                    msg_context= {
+                        'msg_color' : 'danger',
+                        'msg_title' : "No Authorization!",
+                        'msg_body' : "Seems that you have no authority to login in as Client!",
+                        'msg_btn_link' : '/' ,
+                        'msg_btn_text' : 'Back to home' 
+                    }
+                    return render(request,'main/messages.html',msg_context)
+
+                
+                msg_context= {
+                    'msg_color' : 'success',
+                    'msg_title' : "Login success!",
+                    'msg_body' : "You have successfully loggedin as Client, Make sure you Pay for your requirements wisely!",
+                    'msg_btn_link' : '/payments/' ,
+                    'msg_btn_text' : 'Procced to Dashbaord' 
+                }
+                return render(request,'main/messages.html',msg_context)
+
+            # if matching user is not found then we will push an error msg page
+            else:
+                msg_context= {
+                    'msg_color' : 'danger',
+                    'msg_title' : "Login Failed!",
+                    'msg_body' : "You have entered the credentials for Client wrong, make sure you are entering correct credentials!",
+                    'msg_btn_link' : '/auth/client-login' ,
+                    'msg_btn_text' : 'Retry Login' 
+                }
+                return render(request,'main/messages.html',msg_context)
+
+        else:
+            msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Enter a Valid Captcha!",
+                    'msg_body' : "Try again with the form, make sure you fill the captcha right!",
+                    'msg_btn_link' : '/auth/client-login/' ,
+                    'msg_btn_text' : 'Try Again' 
+                }
+            return render(request,'main/messages.html',msg_context)
+
     context={}
     form = ClientLoginForm()
     context['form'] = form

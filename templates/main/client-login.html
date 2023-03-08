@@ -23,7 +23,8 @@
 
   <div class="wrapper vh-100">
     <div class="row align-items-center h-100">
-      <form class="col-lg-3 col-md-4 col-10 mx-auto text-center">
+      <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
+        {% csrf_token %}
         <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="">
           <h1>VASUDEVA</h1>
         </a>
@@ -32,18 +33,25 @@
         <div class="form-group">
           <label for="inputEmail" class="sr-only">Username</label>
           <input type="text" id="inputEmail" class="form-control form-control-lg" placeholder="Username" required=""
-            autofocus="">
+            name="username" autofocus="">
         </div>
         <div class="form-group">
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" id="inputPassword" class="form-control form-control-lg" placeholder="Password"
-            required="">
+            name="password" required="">
+        </div>
+        <div class="form-group">
+          {{form.captcha}}
         </div>
         <div class="checkbox mb-3">
           <label>
-            <input type="checkbox" value="remember-me"> Stay logged in </label>
+            <input type="checkbox" value="stay"> Stay logged in </label>
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Let me in</button>
+        <a href="{% url 'admin_login' %}" class="">
+          <div class="mt-4">Admin Login</div>
+        </a>
+
         <p id="footer-copyright" class="mt-5 mb-3 text-muted"></p>
         <p id="footer-time" class=" mb-3 text-muted"></p>
       </form>
