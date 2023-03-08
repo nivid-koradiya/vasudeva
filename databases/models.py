@@ -163,5 +163,11 @@ class ClientVerificationToken(models.Model):
 class RequestLog(models.Model):
     id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
     ip_address = models.CharField(max_length=32,null=False)
+    path = models.CharField(max_length=1000,null=False)
     timestamp  = models.DateTimeField(auto_now_add=True,null=False,editable=False)
+    method = models.CharField(null=False,max_length=8)
     
+    class Meta:
+        verbose_name = ("Request Log")
+        verbose_name_plural = ("Request Logs")
+        db_table = 'request_log'
