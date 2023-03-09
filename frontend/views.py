@@ -1,4 +1,4 @@
-from databases.models import ClientAdmin,Client
+from databases.models import ClientAdmin,Client,Quota
 import time
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
@@ -490,6 +490,11 @@ def ajax_new_client_signup(request):
                 client.organisation = request.POST.get('org_name')
                 client.mobile = request.POST.get('mobile')
                 client.save()
+                org_quota = Quota()
+                org_quota.quantity =100
+                org_quota.client = client
+                org_quota.mail = 10
+                org_quota.save()
                 client_admin = ClientAdmin()
                 client_admin.username = request.POST.get('username')
                 client_admin.name = request.POST.get('name')
@@ -501,7 +506,7 @@ def ajax_new_client_signup(request):
                 user.is_active = True
                 user.save()
                 client_admin.user = user
-                client_admin.save()      
+                client_admin.save()   
                 time.sleep(2)
                 return JsonResponse({
                 'status' : True,
