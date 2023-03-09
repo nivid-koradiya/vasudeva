@@ -24,6 +24,7 @@ import environ
 from scripts.network.ipadress import get_ip
 from .decorators import log_ip_address
 
+@log_ip_address
 def admin_login(request):
     if request.user.is_authenticated:
         msg_context= {
@@ -100,6 +101,7 @@ def admin_login(request):
     context['form'] = form
     return render(request,'main/admin-login.html', context)
 
+@log_ip_address
 def admin_dashbaord(request):
     if str(request.user).lower() =="anonymoususer":
         return redirect('/auth/admin-login/')
@@ -114,7 +116,8 @@ def admin_dashbaord(request):
                     'msg_btn_text' : 'Admin Login' 
                 }
         return render(request,'main/messages.html',msg_context)
-
+    
+@log_ip_address
 def logout_view(request):
     if str(request.user).lower() =="anonymoususer": #check if the non login user is trying to login.
         return redirect('/auth/admin-login/')
@@ -133,7 +136,7 @@ def logout_view(request):
     }
     return render(request,'main/messages.html',msg_context) # returning the logout message page.
 
-
+@log_ip_address
 def client_logout_view(request):
     if str(request.user).lower() =="anonymoususer": #check if the non login user is trying to login.
         return redirect('/auth/admin-login/')
@@ -156,6 +159,7 @@ def client_logout_view(request):
 
 
 #ADMIN  CLIENTS - ALL
+@log_ip_address
 def admin_all_client(request):
     if str(request.user).lower() =="anonymoususer":
         return redirect('/auth/admin-login/')
@@ -178,7 +182,7 @@ def admin_all_client(request):
 
 
 
-
+@log_ip_address
 def admin_delete_client(request):
     if str(request.user).lower() =="anonymoususer":
         return redirect('/auth/admin-login/')
@@ -200,7 +204,7 @@ def admin_delete_client(request):
         return render(request,'main/messages.html',msg_context)
 
 
-
+@log_ip_address
 def admin_client_admin_all(request):
     if str(request.user).lower() =="anonymoususer":
         return redirect('/auth/admin-login/')
@@ -221,7 +225,7 @@ def admin_client_admin_all(request):
                 }
         return render(request,'main/messages.html',msg_context)
 
-
+@log_ip_address
 def admin_client_admin_manage(request):
     if str(request.user).lower() =="anonymoususer":
         return redirect('/auth/admin-login/')
@@ -244,7 +248,7 @@ def admin_client_admin_manage(request):
                 }
         return render(request,'main/messages.html',msg_context)
 
-
+@log_ip_address
 def client_signup(request):
     form = AjaxClientSignup()
     msg_context={
@@ -254,7 +258,7 @@ def client_signup(request):
     return render(request,'main/client-signup.html',msg_context)
 
 
-
+@log_ip_address
 def client_login(request):
     if request.user.is_authenticated:
         msg_context= {
@@ -343,6 +347,7 @@ def client_login(request):
 @log_ip_address
 def index_view(request):
     return render(request=request,template_name='main/index.html')
+
 
 
 
