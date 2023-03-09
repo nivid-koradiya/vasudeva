@@ -108,8 +108,9 @@ class Quota(models.Model):
     id = models.CharField(default=generate_uuid, primary_key=True,max_length=42)
     client = models.OneToOneField("databases.Client", on_delete=models.CASCADE)
     quantity = models.IntegerField()
+    mail = models.IntegerField()
     last_updated = models.DateTimeField(auto_now=True)
-    
+        
     class Meta:
         verbose_name = ("Quota")
         verbose_name_plural = ("Quotas")
