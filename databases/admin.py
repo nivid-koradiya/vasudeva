@@ -11,6 +11,8 @@ from .models import (
     ApiKeys,
     ClientVerificationToken,
     RequestLog,
+    RechargeRate,
+    PaymentsLog,
 )
 
 class LoginLogAdmin(admin.ModelAdmin):
@@ -75,3 +77,16 @@ class RequestLogAdmin(admin.ModelAdmin):
         'timestamp'
     ]
 admin.site.register(RequestLog,RequestLogAdmin)
+
+
+class RechargeRateAdmin(admin.ModelAdmin):
+    readonly_fields = [
+        'timestamp'
+    ]
+admin.site.register(RechargeRate,RechargeRateAdmin)
+
+class PaymentsLogAdmin(admin.ModelAdmin):
+    readonly_fields = [
+        'timestamp'
+    ]
+admin.site.register(PaymentsLog,PaymentsLogAdmin)

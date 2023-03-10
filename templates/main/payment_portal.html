@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+{%load static%}
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="icon" href="favicon.ico" />
+  <title>Vasudeva Admin Login</title>
+  <!-- CSS IMPORTS -->
+  {% include 'req/req_css.html' %}
+  <!-- CSS IMPORTS ENDS -->
+
+</head>
+
+<body class="light">
+  <div class="wrapper vh-100">
+    <div class="row align-items-center h-100">
+      <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" method="post">
+        {% csrf_token %}
+        <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
+          <h1>VASUDEVA</h1>
+        </a>
+        <h1 class="h6 mb-3">Recharge Portal</h1>
+        <div class="form-group">
+          <div class="card shadow">
+            <div class="card-body">
+              <h6 class="card-title">
+                Your order summary
+              </h6>
+              <ul>
+                <li>
+                  <h6>
+                    Amount paying - INR - <mark> {{user_amount}} </mark><br>
+                  </h6>
+
+                </li>
+                <li id="benifits">
+
+                </li>
+              </ul>
+              <button class="btn btn-outline-success" id="pay-btn">Flash Recharge</button>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <!-- {{form.captcha}} -->
+          <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+          <script>
+            var options = {
+
+              // Enter the Key ID generated from the Dashboard
+              key: "{{ razorpay_merchant_key }}",
+
+              // Amount is in currency subunits.
+              // Default currency is INR. Hence,
+              // 50000 refers to 50000 paise
+              amount: "{{ razorpay_amount }}",
+              currency: "{{ currency }}",
+
+              name: "Vasudeva API Portal",
+              // Your/store name.
+              prefill: {
+                "name": "{{name}}",
+                "contact": "+91{{contact}}",
+                "email": "{{email}}"
+              },
+
+              // Pass the `id` obtained in the response of Step 1
+              order_id: "{{ razorpay_order_id }}",
+              callback_url: "{{ callback_url }}",
+            };
+
+            // initialise razorpay with the options.
+            var rzp1 = new Razorpay(options);
+
+            // add event listener to the payment button.
+            document.getElementById("pay-btn").onclick = function (e) {
+              rzp1.open();
+              e.preventDefault();
+            };
+          </script>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    var d = new Date();
+    var day = d.getFullYear();
+    document.getElementById('footer-copyright').innerHTML = "Vasudeva - CEX © " + day + " ";
+    function checkTime(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    }
+    function startTime() {
+      var today = new Date();
+      var h = today.getHours();
+      var m = today.getMinutes();
+      var s = today.getSeconds();
+      // add a zero in front of numbers<10
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById('footer-time').innerHTML = "Server Time -" + h + ":" + m + ":" + s;
+      t = setTimeout(function () {
+        startTime()
+      }, 500);
+    }
+    startTime();
+  </script>
+
+  <!-- JAVASCRIPT IMPORTS -->
+  {% include 'req/req_js.html' %}
+  <!-- JAVASCRIPT IMPORT ENDS -->
+
+  <script>
+    const x = document.getElementById("benifits");
+    var amt = {{ user_amount }};
+    var req_rate = {{ request_rate }};
+    var mail_rate = {{ mail_rate }};
+    var mails = amt * mail_rate;
+    var reqs = amt * req_rate;
+    x.innerHTML = `<h6> Mails -> ${mails} + Requests -> ${reqs} </h6>`;
+  </script>
+</body>
+
+</html>
+</body>
+
+</html>

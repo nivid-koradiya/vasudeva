@@ -1,4 +1,4 @@
-from databases.models import ClientAdmin,Client,Quota
+from databases.models import ClientAdmin,Client,Quota,RechargeRate
 import time
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
@@ -23,6 +23,9 @@ from scripts.spark_mail import verification_mail as vfm
 import environ
 from scripts.network.ipadress import get_ip
 from .decorators import log_ip_address
+from scripts.payments import capture as  rz_capture
+from scripts.payments import verify as  rz_verify
+from django.views.decorators.csrf import csrf_exempt
 
 @log_ip_address
 def admin_login(request):
@@ -253,7 +256,7 @@ def client_signup(request):
     form = AjaxClientSignup()
     msg_context={
         'form' : form,
-        "qr" : str(request.headers['Cookie']).split('=')[-1],
+        # "qr" : str(request.headers['Cookie']).split('=')[-1],
     }
     return render(request,'main/client-signup.html',msg_context)
 
@@ -265,7 +268,7 @@ def client_login(request):
                     'msg_color' : 'secondary',
                     'msg_title' : ("Welcome, "+ get_username_from_request(request)) ,
                     'msg_body' : "You are already loggedin, press the button below to Recharge Account",
-                    'msg_btn_link' : '/payments/' ,
+                    'msg_btn_link' : '/payment/recharge_portal' ,
                     'msg_btn_text' : 'Procced to Dashbaord' 
                 }
         return render(request,'main/messages.html',msg_context)
@@ -312,7 +315,7 @@ def client_login(request):
                     'msg_color' : 'success',
                     'msg_title' : "Login success!",
                     'msg_body' : "You have successfully loggedin as Client, Make sure you Pay for your requirements wisely!",
-                    'msg_btn_link' : '/payments/' ,
+                    'msg_btn_link' : '/payment/recharge_portal' ,
                     'msg_btn_text' : 'Procced to Dashbaord' 
                 }
                 return render(request,'main/messages.html',msg_context)
@@ -348,14 +351,87 @@ def client_login(request):
 def index_view(request):
     return render(request=request,template_name='main/index.html')
 
+@log_ip_address
+def recharge_portal(request):
+    context ={}
+    rate_list = RechargeRate.objects.order_by("-timestamp")[0]
+    context['mail_rate'] = rate_list.mail_rate
+    context['request_rate'] = rate_list.request_rate
+    return render(request,"main/recharge_portal.html",context)
 
+@log_ip_address
+def payment_portal(request):
+    if request.method == 'POST':
+        username = request.user.username
+        client_admin = ClientAdmin.objects.filter(username = username)
+        if len(client_admin) == 1:
+            context = {}
+            try:
+                amount = int(request.POST.get('amount'))
+            except:
+                msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Amount Error!",
+                    'msg_body' : "Try it with integral values only for better recharge benifits!",
+                    'msg_btn_link' : '/payment/recharge_portal/' ,
+                    'msg_btn_text' : 'Recharge Portal' 
+                }
+                return render(request,'main/messages.html',msg_context)
+            context = rz_capture.gen_order(amount)
+            rate_list = RechargeRate.objects.order_by("-timestamp")[0]
+            context['mail_rate'] = rate_list.mail_rate
+            context['request_rate'] = rate_list.request_rate
+            context['user_amount'] = amount
+            client = client_admin[0].client
+            context['contact'] = client.mobile
+            context['name'] = client.organisation
+            context['email'] = client_admin[0].email
+            print(context)
+            return render(request,"main/payment_portal.html",context)
+        else: 
+            msg_context= {
+                    'msg_color' : 'danger',
+                    'msg_title' : "Authorisation Elevation required!",
+                    'msg_body' : "Try again with different user !",
+                    'msg_btn_link' : '/auth/client-login/' ,
+                    'msg_btn_text' : 'Client Login' 
+                }
+            return render(request,'main/messages.html',msg_context)
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Server Purpose page only!",
+                    'msg_body' : "Cannot navigate the page as a human!",
+                    'msg_btn_link' : '/payment/recharge_portal/' ,
+                    'msg_btn_text' : 'Back to Reharge Portal' 
+                }
+        return render(request,'main/messages.html',msg_context)
 
-
-
-
-
-
-
+@csrf_exempt
+@log_ip_address
+def payment_handler(request):
+    print(request.POST)
+    if request.method == 'POST':
+        try:
+            rz_verify.verify_payment(request)
+            msg_context= {
+                    'msg_color' : 'success',
+                    'msg_title' : "Your Payment is Successful",
+                    'msg_body' : "Your payment has been recieved successfully by Vasudeva!",
+                    'msg_btn_link' : '/payment/recharge_portal/' ,
+                    'msg_btn_text' : 'Back to recharge Portal' 
+                }
+            return render(request,'main/messages.html',msg_context)
+            
+        except:
+            msg_context= {
+                    'msg_color' : 'danger',
+                    'msg_title' : "Your Payment Failed !",
+                    'msg_body' : "Your payment has been failed ue to technical issues!",
+                    'msg_btn_link' : '/payment/recharge_portal/' ,
+                    'msg_btn_text' : 'Back to recharge Portal' 
+                }
+            return render(request,'main/messages.html',msg_context)
 
 
 
@@ -552,11 +628,12 @@ def test_view_1(request):
     # }
     # vfm.send_email(subject, recipients,data)
     # return HttpResponse("SENT")
-    msg_context= {
-        'msg_color' : 'success',
-        'msg_title' : "Client Account Verification Successful!",
-        'msg_body' : "You have successfully verified as a client, Make sure you use API wisely!",
-        'msg_btn_link' : '/payments/' ,
-        'msg_btn_text' : 'Procced to Payment' 
-        }
-    return render(request,'main/messages.html',msg_context)
+    context = rz_capture.gen_order()
+    rate_list = RechargeRate.objects.order_by("-timestamp")[0]
+    context['mail_rate'] = rate_list.mail_rate
+    context['request_rate'] = rate_list.request_rate
+    context['name'] = rate_list.request_rate
+    context['contact'] = rate_list.request_rate
+    context['email'] = rate_list.request_rate
+    return render(request,'main/payment copy.html', context=context)
+

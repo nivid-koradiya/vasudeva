@@ -176,3 +176,36 @@ class RequestLog(models.Model):
         
     def __str__(self):
         return str(self.timestamp.tzinfo)
+    
+class RechargeRate(models.Model):
+    id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    request_rate = models.IntegerField()
+    mail_rate = models.IntegerField()
+    timestamp  = models.DateTimeField(auto_now_add=True,null=False,editable=False)
+
+    class Meta:
+        verbose_name = ("Recharge Rate")
+        verbose_name_plural = ("Recharge Rates")
+        db_table = 'recharge_rate'
+        
+    def __str__(self):
+        return str(self.timestamp)
+    
+class PaymentsLog(models.Model):
+    id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    payment_id =  models.CharField(unique=True,max_length=100)
+    order_id =  models.CharField(unique=True,max_length=100)
+    timestamp  = models.DateTimeField(auto_now_add=True,null=False,editable=False)
+    client = models.ForeignKey(Client,on_delete=models.CASCADE)
+    rate = models.ForeignKey(RechargeRate,on_delete=models.CASCADE)
+    amount =models.IntegerField()
+    class Meta:
+        verbose_name = ("Payment Log")
+        verbose_name_plural = ("Payment Logs")
+        db_table = 'payment_log'
+        
+    def __str__(self):
+        return str(self.timestamp)
+
+    
+    

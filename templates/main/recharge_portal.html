@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+{%load static%}
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="icon" href="favicon.ico" />
+  <title>Vasudeva Admin Login</title>
+  <!-- CSS IMPORTS -->
+  {% include 'req/req_css.html' %}
+  <!-- CSS IMPORTS ENDS -->
+
+</head>
+
+<body class="light">
+  <div class="wrapper vh-100">
+    <div class="row align-items-center h-100">
+      <form class="col-lg-3 col-md-4 col-10 mx-auto text-center" action="{% url 'payment_portal' %}" method="post">
+        {% csrf_token %}
+        <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
+          <h1>VASUDEVA</h1>
+        </a>
+        <h1 class="h6 mb-3">Recharge Portal</h1>
+
+        <div class="form-group">
+          <label for="amount" class="sr-only">Amount</label>
+          <input type="text" id="amount" class="form-control form-control-lg" placeholder="Amount" required=""
+            name="amount" autofocus="">
+        </div>
+        <div class="form-group">
+          <ul>
+            <li class="h6 text-left">RATE - 1 INR -> {{request_rate}} requests + {{mail_rate}} mails</li>
+            <!-- <li class="h6 text-left">1 INR converts to - 10 mails</li> -->
+            <!-- <li class="h6 text-left" id="out" style="color:green">Your Conversion - 0 Req. + 0 Mail</li> -->
+          </ul>
+        </div>
+        <div class="form-group">
+          {{form.captcha}}
+        </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Procceed</button>
+        <!-- <a href="{% url 'client_login' %}" class="">
+          <div class="mt-4">Client Login</div>
+        </a> -->
+        <p id="footer-copyright" class="mt-5 mb-3 text-muted"></p>
+        <p id="footer-time" class=" mb-3 text-muted"></p>
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    var d = new Date();
+    var day = d.getFullYear();
+    document.getElementById('footer-copyright').innerHTML = "Vasudeva - CEX © " + day + " ";
+    function checkTime(i) {
+      if (i < 10) {
+        i = "0" + i;
+      }
+      return i;
+    }
+    function startTime() {
+      var today = new Date();
+      var h = today.getHours();
+      var m = today.getMinutes();
+      var s = today.getSeconds();
+      // add a zero in front of numbers<10
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById('footer-time').innerHTML = "Server Time -" + h + ":" + m + ":" + s;
+      t = setTimeout(function () {
+        startTime()
+      }, 500);
+    }
+    startTime();
+  </script>
+
+  <!-- JAVASCRIPT IMPORTS -->
+  {% include 'req/req_js.html' %}
+  <!-- JAVASCRIPT IMPORT ENDS -->
+
+  <script>
+
+
+  </script>
+</body>
+
+</html>
+</body>
+
+</html>
