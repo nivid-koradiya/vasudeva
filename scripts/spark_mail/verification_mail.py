@@ -11,7 +11,7 @@ def send_email(subject,recipients,data):
     body=''
     with open('scripts/spark_mail/templates/verification_mail.html','r') as f:
         body = f.read()
-        print(body)
+        # print(body)
     try:
         body = body.replace('**id**',data['id'])
     except:
@@ -23,8 +23,9 @@ def send_email(subject,recipients,data):
     msg = MIMEText(body,'html')
     msg['Subject'] = subject
     msg['From'] = sender
-    msg['To'] = ', '.join(recipients)
+    msg['To'] = recipients
     smtp_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
     smtp_server.login(sender, password)
     smtp_server.sendmail(sender, recipients, msg.as_string())
     smtp_server.quit()
+    print(f"mail_sent tp + {recipients}")

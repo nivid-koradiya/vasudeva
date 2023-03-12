@@ -10,6 +10,7 @@ from .views import (
     client_signup,
     client_login,
     client_logout_view,
+    verify_client,
     
     #ajax requests.
     ajax_client_delete,
@@ -57,6 +58,10 @@ urlpatterns = [
     path("auth/client-login/",client_login,name='client_login'),
     path("auth/logout/",logout_view, name="logout"),
     path("auth/logout/client/",client_logout_view, name="client_logout"),
+    
+    #verification urls
+    path("verify/client/",verify_client,name='verify_client'),
+    
     
     #payment recharge URLs
     path("payment/recharge_portal/",recharge_portal, name="recharge_portal"),
