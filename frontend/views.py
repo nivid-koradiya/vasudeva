@@ -448,7 +448,30 @@ def payment_handler(request):
             return render(request,'main/messages.html',msg_context)
 
 
-
+def admin_apikey_all(request):
+    if str(request.user).lower() =="anonymoususer":
+        return redirect('/auth/admin-login/')
+    if request.user.is_staff:
+        keys = ApiKeys.objects.all().order_by('client')
+        ca = ClientAdmin.objects.all().order_by('client')
+        print(keys)
+        print(ca)
+        keys = zip(keys,ca)
+        data = {
+            'title' : 'Vasudeva Admin Dashboard',
+            "keys": keys
+        }
+        return render(request,'main/admin-apikey-all.html',data)
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Not Authorized!",
+                    'msg_body' : "You lack the permissions to access this portion of admin sections, Try logging in as ad Admin!",
+                    'msg_btn_link' : '/auth/admin-login/' ,
+                    'msg_btn_text' : 'Admin Login' 
+                }
+        return render(request,'main/messages.html',msg_context)
+    
 
 
 
@@ -467,7 +490,20 @@ def ajax_client_delete(request):
     deleted_id = None
     try:
         id = request.POST.get('client_id')
-        # Client.objects.get(id = id).delete()
+        # fetching the client entities
+        client = Client.objects.get(id = id)
+        api_key = ApiKeys.objects.get(client = client)
+        client_admin = ClientAdmin.objects.get(client=client)
+        quota = Quota.objects.get(client=client)
+        client.delete()
+        api_key.delete()
+        client_admin.delete()
+        quota.delete()
+        # print(client)
+        # print(api_key)
+        # print(quota.quantity)
+        # print(client_admin.email)
+        #returning the deleted item id and the status as True
         return  JsonResponse({
             'deleted' : True,
             'id' : id
@@ -602,6 +638,9 @@ def ajax_new_client_signup(request):
                 user.save()
                 client_admin.user = user
                 client_admin.save()   
+                api_key = ApiKeys()
+                api_key.client = client
+                api_key.save()
                 time.sleep(2)
                 return JsonResponse({
                 'status' : True,

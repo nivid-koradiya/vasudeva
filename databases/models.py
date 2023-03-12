@@ -143,14 +143,16 @@ class SurfaceUserAuthLog(models.Model):
     
 # API KEY MODEL FUNCTIONS
 def generate_api_key():
-    api_key = se.token_urlsafe(64)
-    return api_key[:60]
+    api_key = uuid.uuid4().hex
+    return api_key
 # API KEY MODEL 
 class ApiKeys(models.Model):
     id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
     key_value = models.CharField(max_length=64,default=generate_api_key)
     client = models.ForeignKey(Client,on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
+    
+
     
     
 def generate_verification_token():

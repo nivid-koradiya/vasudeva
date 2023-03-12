@@ -23,13 +23,6 @@
                 <span class="badge badge-info">Beta</span>
             </div>
             <ul class="nav">
-
-                <!-- <li class="nav-item nav-notif">
-                    <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-notif">
-                        <span class="fe fe-bell fe-16"></span>
-                        <span class="dot dot-md bg-success"></span>
-                    </a>
-                </li> -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-muted pr-0" href="/admin">
                         <span class="avatar avatar-sm mt-2">
@@ -54,53 +47,44 @@
             <div class="container-fluid">
                 <div class="row justify-content-center">
                     <div class="col-12">
-                        <h2 class="page-title">Client Admin Management</h2>
+                        <h2 class="page-title">API Key Management</h2>
                         <div class="row">
                             <!-- simple table -->
                             <div class="col-md-12 my-4">
                                 <div class="card shadow">
                                     <div class="card-body">
-                                        <h5 class="card-title">View All Client Admins</h5>
+                                        <h5 class="card-title">View All Api Keys</h5>
                                         <p class="card-text">
-                                            This Page is a static reference for all of the client admins
+                                            All the Api Keys are shon and listed in here. You could maanage these keys
+                                            in the next section of the Api Keys.
                                         </p>
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
 
                                                     <th>ID</th>
-                                                    <th>Username</th>
-                                                    <th>Name</th>
-                                                    <th>E-mail</th>
+                                                    <th>KEY</th>
                                                     <th>Client</th>
-                                                    <th>User</th>
-                                                    <th>Status</th>
+                                                    <th>Admin mail</th>
+                                                    <th>Timestamp</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {% for client in clients %}
-                                                <td>{{client.id}}</td>
-                                                <td>{{client.username}}</td>
-                                                <td>{{client.name}}</td>
-                                                <td>{{client.email}}</td>
-                                                <td>{{client.client}}</td>
-                                                <td>{{client.user}}</td>
-                                                {% if client.is_active %}
-                                                <td>
-                                                    <span class="badge badge-pill badge-success">Active</span>
-                                                </td>
-                                                {% else %}
-                                                <td>
-                                                    <span class="badge badge-pill badge-danger">In-Active</span>
-                                                </td>
-
-                                                {% endif %}
+                                                {% for key , ca in keys %}
+                                                <tr>
+                                                    <td>{{key.id}}</td>
+                                                    <td>{{key.key_value|truncatechars:10}}</td>
+                                                    <td>{{key.client}}</td>
+                                                    <td>{{ca.email}}</td>
+                                                    <td>{{key.timestamp}}</td>
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+
                             </div>
                             <!-- simple table -->
                         </div>

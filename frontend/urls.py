@@ -6,6 +6,7 @@ from .views import (
     admin_delete_client,
     admin_client_admin_all,
     admin_client_admin_manage,
+    admin_apikey_all,
     client_signup,
     client_login,
     client_logout_view,
@@ -40,6 +41,7 @@ urlpatterns = [
     path("dashboard/admin/client/manage/",admin_delete_client,name='client_manage'),
     path("dashboard/admin/clientadmin/all/",admin_client_admin_all,name='clientadmin_all'),
     path("dashboard/admin/clientadmin/manage/",admin_client_admin_manage,name='clientadmin_manage'),
+    path("dashboard/admin/apikey/all",admin_apikey_all,name='admin_apikey_all'),
     # /dashboard/admin/clientadmin/all
     
     #AJAX REQUESTS
