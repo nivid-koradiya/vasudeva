@@ -1,4 +1,4 @@
-from databases.models import ClientAdmin,Client,Quota,RechargeRate
+from databases.models import ClientAdmin,Client,Quota,RechargeRate,ApiKeys
 import time
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
@@ -115,8 +115,8 @@ def admin_dashbaord(request):
                     'msg_color' : 'warning',
                     'msg_title' : "Not Authorized!",
                     'msg_body' : "You lack the permissions to access this portino of admin sections, Try logging in as ad Admin!",
-                    'msg_btn_link' : '/auth/admin-login/' ,
-                    'msg_btn_text' : 'Admin Login' 
+                    'msg_btn_link' : '/auth/logout/' ,
+                    'msg_btn_text' : 'Logout' 
                 }
         return render(request,'main/messages.html',msg_context)
     
@@ -287,6 +287,16 @@ def client_login(request):
                 if user is not None:
                     try:
                         user_client = ClientAdmin.objects.get(username=username)
+                        client = user_client.client
+                        if not client.is_active : 
+                            msg_context= {
+                                'msg_color' : 'warning',
+                                'msg_title' : "Account INACTIVE",
+                                'msg_body' : "Your API account has not been VERIFIED or Suspended by the vasudeva portal!",
+                                'msg_btn_link' : '' ,
+                                'msg_btn_text' : 'Back to Home' 
+                            }
+                            return render(request,'main/messages.html',msg_context,status=401)
                     except:
                         msg_context= {
                             'msg_color' : 'danger',
