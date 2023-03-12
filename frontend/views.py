@@ -1,10 +1,10 @@
-from databases.models import ClientAdmin,Client,Quota,RechargeRate,ApiKeys
+from databases.models import ( ClientAdmin,Client,Quota,RechargeRate,ApiKeys, ClientVerificationToken)
 import time
 from django.contrib.auth import authenticate, login, logout
 from django.core import serializers
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import redirect, render
-from scripts.admin_user.user_details import get_username_from_request
+from scripts.admin_user.user_details import get_username_from_request, get_client_name_from_request
 from scripts.logging.login_logout_logs import (
     admin_login_log,
     admin_logout_log,
@@ -26,6 +26,11 @@ from .decorators import log_ip_address
 from scripts.payments import capture as  rz_capture
 from scripts.payments import verify as  rz_verify
 from django.views.decorators.csrf import csrf_exempt
+from scripts.spark_mail import verification_mail 
+from vasudeva.settings import ALLOWED_HOSTS
+from datetime import datetime , timezone, timedelta
+env = environ.Env()
+environ.Env.read_env()
 
 @log_ip_address
 def admin_login(request):
@@ -141,10 +146,9 @@ def logout_view(request):
 
 @log_ip_address
 def client_logout_view(request):
-    if str(request.user).lower() =="anonymoususer": #check if the non login user is trying to login.
-        return redirect('/auth/admin-login/')
+    if str(request.user).lower() =="anonymoususer": #check if the non login user is trying to login
+        return redirect('/auth/client-login/')
     
-
     user = get_username_from_request(request) # storing the username for messaging purpose.
     client_logout_log(request) # log the logout record.
     logout(request)
@@ -253,6 +257,16 @@ def admin_client_admin_manage(request):
 
 @log_ip_address
 def client_signup(request):
+    if request.user.is_authenticated:
+        msg_context= {
+                    'msg_color' : 'secondary',
+                    'msg_title' : ("Welcome, "+ get_username_from_request(request)) ,
+                    'msg_body' : "You are already loggedin, press the button below to Recharge Account",
+                    'msg_btn_link' : '/payment/recharge_portal' ,
+                    'msg_btn_text' : 'Procced to Dashbaord' 
+                }
+        return render(request,'main/messages.html',msg_context)
+
     form = AjaxClientSignup()
     msg_context={
         'form' : form,
@@ -365,12 +379,21 @@ def index_view(request):
 
 @log_ip_address
 def recharge_portal(request):
-    context ={}
-    rate_list = RechargeRate.objects.order_by("-timestamp")[0]
-    context['mail_rate'] = rate_list.mail_rate
-    context['request_rate'] = rate_list.request_rate
-    return render(request,"main/recharge_portal.html",context)
-
+    if request.user.is_authenticated:
+        context ={}
+        rate_list = RechargeRate.objects.order_by("-timestamp")[0]
+        context['mail_rate'] = rate_list.mail_rate
+        context['request_rate'] = rate_list.request_rate
+        return render(request,"main/recharge_portal.html",context)
+    else: 
+        msg_context= {
+                    'msg_color' : 'danger',
+                    'msg_title' : "Login Required!",
+                    'msg_body' : "To recharge your account you need to login first!",
+                    'msg_btn_link' : '/auth/client-login' ,
+                    'msg_btn_text' : 'Login' 
+                }
+        return render(request,'main/messages.html',msg_context,status=401)
 @log_ip_address
 def payment_portal(request):
     if request.method == 'POST':
@@ -446,7 +469,15 @@ def payment_handler(request):
                     'msg_btn_text' : 'Back to recharge Portal' 
                 }
             return render(request,'main/messages.html',msg_context)
-
+    else:
+        msg_context= {
+                    'msg_color' : 'warning',
+                    'msg_title' : "Server Purpose page only!",
+                    'msg_body' : "Cannot navigate the page as a human!",
+                    'msg_btn_link' : '/payment/recharge_portal/' ,
+                    'msg_btn_text' : 'Back to Reharge Portal' 
+                }
+        return render(request,'main/messages.html',msg_context)
 
 def admin_apikey_all(request):
     if str(request.user).lower() =="anonymoususer":
@@ -474,7 +505,55 @@ def admin_apikey_all(request):
     
 
 
-
+def verify_client(request):
+    token = str(request.GET.get('token'))
+    print(token)
+    try : 
+        verif_token = ClientVerificationToken.objects.get(token=token)
+        delta = verif_token.timestamp - datetime.now(timezone.utc)
+        if delta.seconds <= 86400 :
+            client = verif_token.client
+            if client.is_active == True:
+                msg_context= {
+                        'msg_color' : 'secondary',
+                        'msg_title' : f"{str(verif_token.client).upper()} ALREADY VERIFIED !",
+                        'msg_body'  :  "Your organisation is already verified from our side, please login to access the portal!",
+                        'msg_btn_link' : '/auth/client-login/' ,
+                        'msg_btn_text' : 'Login' 
+                    }
+            
+                return render(request,'main/messages.html',msg_context)
+            
+            client.is_active = True
+            client.save()
+            msg_context= {
+                        'msg_color' : 'success',
+                        'msg_title' : f"{str(verif_token.client).upper()} Verified !",
+                        'msg_body'  :  "Your organisation is verified successfully, you will soon recieve the API credentials on the mail, until you may visit out recharge facility after logging in!",
+                        'msg_btn_link' : '/auth/client-login/' ,
+                        'msg_btn_text' : 'Login' 
+                    }
+            
+            return render(request,'main/messages.html',msg_context)
+            
+        else:
+            msg_context= {
+                        'msg_color' : 'warning',
+                        'msg_title' : f"Token-Expired !",
+                        'msg_body'  :  f"Your token was Expired on {verif_token.timestamp + timedelta(0,86400)}",
+                        'msg_btn_link' : '/auth/client-login/' ,
+                        'msg_btn_text' : 'Back to Login' 
+                    }
+            return render(request,'main/messages.html',msg_context)
+    except:
+        msg_context= {
+                        'msg_color' : 'danger',
+                        'msg_title' : "Verification token not found !",
+                        'msg_body'  :  "Token you are trying to verify is not a valid token, in-case of any inconvienience contact - devflix.mail.me@gmail.com !",
+                        'msg_btn_link' : '/' ,
+                        'msg_btn_text' : 'Back to Home' 
+                    }
+        return render(request,'main/messages.html',msg_context)
 
 
 
@@ -546,6 +625,15 @@ def ajax_client_new(request):
             client.organisation = request.POST.get('company')
             client.mobile = request.POST.get('phone')
             client.save()
+            api_key = ApiKeys()
+            api_key.client = client
+            api_key.save()
+            org_quota = Quota()
+            org_quota.quantity =100
+            org_quota.client = client
+            org_quota.mail = 10
+            org_quota.save()
+            
             return  JsonResponse({
                 'success' : True
             })
@@ -637,10 +725,16 @@ def ajax_new_client_signup(request):
                 user.is_active = True
                 user.save()
                 client_admin.user = user
-                client_admin.save()   
+                client_admin.save()    
                 api_key = ApiKeys()
                 api_key.client = client
                 api_key.save()
+                verif_tok = ClientVerificationToken()
+                verif_tok.client = client
+                verif_tok.save()
+                verf_url = "http://"+ env('HOST')+ '/verify/client/?token=' + str(verif_tok.token)
+                data={'id' : client.id,'url': verf_url}
+                verification_mail.send_email(subject="Verification Mail for Accessing Account!",recipients=str(client_admin.email),data=data)
                 time.sleep(2)
                 return JsonResponse({
                 'status' : True,
@@ -681,12 +775,9 @@ def test_view_1(request):
     # }
     # vfm.send_email(subject, recipients,data)
     # return HttpResponse("SENT")
-    context = rz_capture.gen_order()
-    rate_list = RechargeRate.objects.order_by("-timestamp")[0]
-    context['mail_rate'] = rate_list.mail_rate
-    context['request_rate'] = rate_list.request_rate
-    context['name'] = rate_list.request_rate
-    context['contact'] = rate_list.request_rate
-    context['email'] = rate_list.request_rate
-    return render(request,'main/payment copy.html', context=context)
-
+    # ClientAdmin.objects.all().delete()
+    # Client.objects.all().delete()
+    # ApiKeys.objects.all().delete()
+    # Quota.objects.all().delete()
+    # ClientVerificationToken.objects.all().delete()
+    return HttpResponse("ALL CLIENT'S DATA FLUSHED FROM DATABASE")
