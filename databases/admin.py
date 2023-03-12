@@ -13,6 +13,7 @@ from .models import (
     RequestLog,
     RechargeRate,
     PaymentsLog,
+    LogApiRequests,
 )
 
 class LoginLogAdmin(admin.ModelAdmin):
@@ -90,3 +91,10 @@ class PaymentsLogAdmin(admin.ModelAdmin):
         'timestamp'
     ]
 admin.site.register(PaymentsLog,PaymentsLogAdmin)
+
+class LogApiRequestsAdmin(admin.ModelAdmin):
+    readonly_fields = [
+        'timestamp'
+    ]
+admin.site.register(LogApiRequests,LogApiRequestsAdmin)
+

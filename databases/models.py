@@ -125,7 +125,7 @@ class Quota(models.Model):
 class SurfaceUser(models.Model):
     id = models.CharField(default=generate_uuid, primary_key=True,max_length=42)
     name = models.CharField(max_length=50)
-    username = models.CharField(default='user',max_length=64)
+    username = models.CharField(default='user',max_length=64,unique=True)
     password = models.CharField(default='',max_length=300)
     client = models.ForeignKey(Client,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -210,4 +210,18 @@ class PaymentsLog(models.Model):
         return str(self.timestamp)
 
     
+class LogApiRequests(models.Model):
+    id =  models.CharField(default=generate_uuid, primary_key=True,max_length=42)
+    key_used = models.CharField(max_length=100)
+    ip_address = models.CharField(max_length=32,null=False)
+    path = models.CharField(max_length=1000,null=False)
+    timestamp  = models.DateTimeField(auto_now_add=True,null=False,editable=False)
+    method = models.CharField(null=False,max_length=8)
     
+    class Meta:
+        verbose_name = ("API Request Log")
+        verbose_name_plural = ("API Request Logs")
+        db_table = 'api_request_log'
+        
+    def __str__(self):
+        return str(self.id)
