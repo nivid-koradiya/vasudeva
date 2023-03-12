@@ -27,8 +27,11 @@
 
                 <div class="alert alert-{{msg_color}}" role="alert"> {{msg_body}}
                 </div>
-            
+
                 <a href="{{msg_btn_link}}" class="btn btn-md btn-primary btn-block ">{{msg_btn_text}}</a>
+                {% if msg_btn2_link %}
+                <a href="{{msg_btn2_link}}" class="btn btn-sm btn-secondary  mt-3">{{msg_btn2_text}}</a>
+                {% endif %}
                 <p id="footer-copyright" class="mt-5 mb-3 text-muted"></p>
             </form>
         </div>

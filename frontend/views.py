@@ -65,7 +65,7 @@ def admin_login(request):
                         'msg_btn_link' : '' ,
                         'msg_btn_text' : 'Back to home' 
                     }
-                    return render(request,'main/messages.html',msg_context)
+                    return render(request,'main/messages.html',msg_context,status=401)
 
                 
                 msg_context= {
@@ -86,7 +86,7 @@ def admin_login(request):
                     'msg_btn_link' : '/auth/admin-login' ,
                     'msg_btn_text' : 'Retry Login' 
                 }
-                return render(request,'main/messages.html',msg_context)
+                return render(request,'main/messages.html',msg_context,status=401)
 
         else:
             msg_context= {
@@ -96,7 +96,7 @@ def admin_login(request):
                     'msg_btn_link' : '/auth/admin-login/' ,
                     'msg_btn_text' : 'Try Again' 
                 }
-            return render(request,'main/messages.html',msg_context)
+            return render(request,'main/messages.html',msg_context,status=401)
 
     #adding the form to the context that is being sent with the request to template
     context = dict()
@@ -303,7 +303,7 @@ def client_login(request):
                             'msg_title' : "Login Authority is mismatched!",
                             'msg_body' : "You have entered the credentials for CLIENT mismatched with another staff user of VASUDEVA, make sure you are entering right password on this portal!",
                             'msg_btn_link' : '/auth/client-login' ,
-                            'msg_btn_text' : 'Retry Login' 
+                            'msg_btn_text' : 'Retry Login'
                         }
                         return render(request,'main/messages.html',msg_context)
                     
@@ -316,9 +316,11 @@ def client_login(request):
                         'msg_title' : "No Authorization!",
                         'msg_body' : "Seems that you have no authority to login in as Client!",
                         'msg_btn_link' : '/' ,
-                        'msg_btn_text' : 'Back to home' 
+                        'msg_btn_text' : 'Back to home' ,
+
+                        
                     }
-                    return render(request,'main/messages.html',msg_context)
+                    return render(request,'main/messages.html',msg_context,status=401)
 
                 
                 msg_context= {
@@ -339,7 +341,7 @@ def client_login(request):
                     'msg_btn_link' : '/auth/client-login' ,
                     'msg_btn_text' : 'Retry Login' 
                 }
-                return render(request,'main/messages.html',msg_context)
+                return render(request,'main/messages.html',msg_context,status=401)
 
         else:
             msg_context= {
@@ -349,7 +351,7 @@ def client_login(request):
                     'msg_btn_link' : '/auth/client-login/' ,
                     'msg_btn_text' : 'Try Again' 
                 }
-            return render(request,'main/messages.html',msg_context)
+            return render(request,'main/messages.html',msg_context,status=401)
 
     context={}
     form = ClientLoginForm()
@@ -429,7 +431,9 @@ def payment_handler(request):
                     'msg_title' : "Your Payment is Successful",
                     'msg_body' : "Your payment has been recieved successfully by Vasudeva!",
                     'msg_btn_link' : '/payment/recharge_portal/' ,
-                    'msg_btn_text' : 'Back to recharge Portal' 
+                    'msg_btn_text' : 'Back to recharge Portal' ,
+                    'msg_btn2_link' : '/auth/logout/' ,
+                    'msg_btn2_text' : 'Logout' ,
                 }
             return render(request,'main/messages.html',msg_context)
             
